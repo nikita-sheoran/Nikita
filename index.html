@@ -10,7 +10,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    background: linear-gradient(135deg, #ff758c, #ff7eb3, #fad0c4);
     color: #fff;
     text-align: center;
     overflow-x: hidden;
@@ -22,16 +22,34 @@ body {
     padding: 30px;
 }
 
-h1 { font-size: 36px; }
-p { font-size: 18px; line-height: 1.6; }
-
-.proposal {
-    margin-top: 30px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #ffe600;
+/* 🌈 Gradient Heading */
+h1 {
+    font-size: 40px;
+    background: linear-gradient(45deg, #ff0000, #ffcc00, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
 }
 
+/* 💖 Stylish Paragraph */
+p {
+    font-size: 19px;
+    line-height: 1.7;
+    background: linear-gradient(90deg, #ffffff, #ffe6f0, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 💍 Proposal Glow */
+.proposal {
+    margin-top: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffe600;
+    text-shadow: 0 0 15px #ff0;
+}
+
+/* Buttons */
 .btn {
     margin: 10px;
     padding: 12px 25px;
@@ -39,12 +57,17 @@ p { font-size: 18px; line-height: 1.6; }
     border-radius: 25px;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-.yes { background: #28a745; color: white; }
-.no { background: #dc3545; color: white; position: absolute; }
+.yes { background: #00c853; color: white; }
+.no { background: #ff1744; color: white; position: absolute; }
 
-/* ❤️ Falling hearts */
+.btn:hover {
+    transform: scale(1.1);
+}
+
+/* ❤️ Hearts */
 .heart {
     position: fixed;
     top: -10px;
@@ -57,22 +80,23 @@ p { font-size: 18px; line-height: 1.6; }
     100% { transform: translateY(100vh); }
 }
 
-/* 💍 Popup */
+/* Popup */
 #popup {
     display: none;
     position: fixed;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ff4b5c;
+    background: #ff4081;
     padding: 30px;
     border-radius: 20px;
     font-size: 22px;
+    box-shadow: 0 0 20px #fff;
 }
 
-/* typing cursor */
+/* Cursor */
 .cursor {
-    border-right: 2px solid white;
+    border-right: 3px solid white;
     animation: blink 1s infinite;
 }
 
@@ -86,14 +110,13 @@ p { font-size: 18px; line-height: 1.6; }
 
 <!-- 🎵 Music -->
 <audio id="music" loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
     <h1>My Dear Nikita ❤️</h1>
     <h2>Happy Birthday meri jaan 🎂❤️</h2>
 
-    <!-- Typing Text -->
     <p id="text" class="cursor"></p>
 
     <div id="afterText" style="display:none;">
@@ -121,7 +144,7 @@ p { font-size: 18px; line-height: 1.6; }
 <div id="popup">Yayyyy ❤️ Tum meri ho 💍</div>
 
 <script>
-// ❤️ Falling hearts
+// ❤️ Hearts
 setInterval(() => {
     let heart = document.createElement("div");
     heart.innerHTML = "❤️";
@@ -129,7 +152,6 @@ setInterval(() => {
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 5000);
 }, 300);
 
@@ -147,10 +169,17 @@ noBtn.addEventListener("mouseover", () => {
 
 // 🎵 Music
 function playMusic() {
-    document.getElementById("music").play();
+    let music = document.getElementById("music");
+    music.play();
 }
 
-// ✍️ Typing Animation (FULL LETTER)
+// auto play after first tap
+document.body.addEventListener("click", function () {
+    let music = document.getElementById("music");
+    music.play();
+}, { once: true });
+
+// ✍️ Typing FULL LETTER
 let text = `Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
 
 Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
@@ -166,19 +195,16 @@ Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, t
 Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho jitni tum meri zindagi me special ho.`;
 
 let i = 0;
-let speed = 30;
-
 function typeWriter() {
     if (i < text.length) {
         document.getElementById("text").innerHTML += text.charAt(i);
         i++;
-        setTimeout(typeWriter, speed);
+        setTimeout(typeWriter, 25);
     } else {
         document.getElementById("afterText").style.display = "block";
         document.getElementById("text").classList.remove("cursor");
     }
 }
-
 typeWriter();
 </script>
 
