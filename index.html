@@ -8,179 +8,224 @@
 <style>
 body {
     margin: 0;
-    padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3, #fad0c4);
-    color: #fff;
+    background: black;
+    color: white;
     text-align: center;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-.container {
-    max-width: 750px;
-    margin: auto;
-    padding: 30px;
+/* 🔐 Lock Screen */
+#lockScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#lockScreen input {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    width: 250px;
+    text-align: center;
+}
+#lockScreen button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: pink;
 }
 
-/* 🌈 Gradient Heading */
+/* 🌌 Stars */
+.star {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+/* 🎬 Intro */
+#intro {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#intro button {
+    padding: 15px 30px;
+    font-size: 20px;
+    border-radius: 30px;
+    background: #ff4081;
+    border: none;
+    color: white;
+}
+
+/* Main */
+#main {
+    display: none;
+    padding: 20px;
+}
+
 h1 {
     font-size: 40px;
-    background: linear-gradient(45deg, #ff0000, #ffcc00, #00ffcc);
+    background: linear-gradient(45deg, red, yellow, cyan);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(255,255,255,0.7);
 }
 
-/* 💖 Stylish Paragraph */
 p {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.7;
-    background: linear-gradient(90deg, #ffffff, #ffe6f0, #fff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px pink;
 }
 
-/* 💍 Proposal Glow */
 .proposal {
-    margin-top: 30px;
     font-size: 24px;
-    font-weight: bold;
-    color: #ffe600;
-    text-shadow: 0 0 15px #ff0;
+    color: yellow;
+    text-shadow: 0 0 15px gold;
 }
 
-/* Buttons */
 .btn {
     margin: 10px;
     padding: 12px 25px;
-    font-size: 18px;
     border-radius: 25px;
     border: none;
+    font-size: 18px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-.yes { background: #00c853; color: white; }
-.no { background: #ff1744; color: white; position: absolute; }
-
-.btn:hover {
-    transform: scale(1.1);
-}
+.yes { background: green; color: white; }
+.no { background: red; color: white; position: absolute; }
 
 /* ❤️ Hearts */
 .heart {
     position: fixed;
     top: -10px;
-    font-size: 20px;
     animation: fall linear infinite;
 }
-
 @keyframes fall {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(100vh); }
+    to { transform: translateY(100vh); }
 }
 
-/* Popup */
+/* 💍 Popup */
 #popup {
     display: none;
     position: fixed;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ff4081;
+    background: pink;
     padding: 30px;
     border-radius: 20px;
     font-size: 22px;
-    box-shadow: 0 0 20px #fff;
 }
 
 /* Cursor */
 .cursor {
-    border-right: 3px solid white;
+    border-right: 2px solid white;
     animation: blink 1s infinite;
 }
-
-@keyframes blink {
-    50% { border-color: transparent; }
-}
+@keyframes blink { 50% { border-color: transparent; } }
 </style>
 </head>
 
 <body>
 
+<!-- 🔐 Lock Screen -->
+<div id="lockScreen">
+    <h2>Enter Secret Code ❤️</h2>
+    <input type="text" id="password" placeholder="Type here..." />
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- 🌌 Stars -->
+<script>
+for(let i=0;i<120;i++){
+    let star=document.createElement("div");
+    star.className="star";
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+    document.body.appendChild(star);
+}
+</script>
+
+<!-- 🎬 Intro -->
+<div id="intro">
+    <h2>💖 Special Surprise For You 💖</h2>
+    <button onclick="start()">Start ❤️</button>
+</div>
+
 <!-- 🎵 Music -->
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
+<!-- Main Content -->
+<div id="main">
     <h1>My Dear Nikita ❤️</h1>
     <h2>Happy Birthday meri jaan 🎂❤️</h2>
 
     <p id="text" class="cursor"></p>
 
     <div id="afterText" style="display:none;">
-
         <p class="proposal">
         Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi? 💍 <br>
         Kya tum meri wife banogi?
         </p>
 
-        <button class="btn yes" onclick="sayYes()">YES ❤️</button>
+        <button class="btn yes" onclick="yes()">YES ❤️</button>
         <button class="btn no" id="noBtn">NO 😢</button>
 
-        <br><br>
-        <button class="btn" onclick="playMusic()">🎵 Play Music</button>
-
-        <p style="margin-top:30px;">
-        I love you more than words can ever explain ❤️
-        </p>
-
+        <p>I love you more than words can ever explain ❤️</p>
         <h3>Hamesha tumhara,<br>Mukesh</h3>
-
     </div>
 </div>
 
-<div id="popup">Yayyyy ❤️ Tum meri ho 💍</div>
+<!-- Popup -->
+<div id="popup">💍 She said YES ❤️</div>
 
 <script>
-// ❤️ Hearts
-setInterval(() => {
-    let heart = document.createElement("div");
-    heart.innerHTML = "❤️";
-    heart.classList.add("heart");
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-}, 300);
-
-// 💍 YES
-function sayYes() {
-    document.getElementById("popup").style.display = "block";
+// 🔐 Password
+function checkPassword(){
+    let input = document.getElementById("password").value.toLowerCase().trim();
+    if(input === "i love you mera aadmi"){
+        document.getElementById("lockScreen").style.display="none";
+        document.getElementById("intro").style.display="flex";
+    } else {
+        document.getElementById("error").innerText = "Wrong code 😢";
+    }
 }
 
-// 😂 NO bhaagega
-let noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", () => {
-    noBtn.style.left = Math.random() * 80 + "vw";
-    noBtn.style.top = Math.random() * 80 + "vh";
-});
-
-// 🎵 Music
-function playMusic() {
-    let music = document.getElementById("music");
-    music.play();
+// 🎬 Start
+function start(){
+    document.getElementById("intro").style.display="none";
+    document.getElementById("main").style.display="block";
+    document.getElementById("music").play();
+    typeWriter();
 }
 
-// auto play after first tap
-document.body.addEventListener("click", function () {
-    let music = document.getElementById("music");
-    music.play();
-}, { once: true });
+// ✍️ FULL LETTER (NO CUT)
+let text = `My Dear Nikita,
 
-// ✍️ Typing FULL LETTER
-let text = `Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
+Happy Birthday meri jaan 🎂❤️
+
+Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
 
 Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
 
@@ -195,17 +240,39 @@ Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, t
 Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho jitni tum meri zindagi me special ho.`;
 
 let i = 0;
-function typeWriter() {
-    if (i < text.length) {
+function typeWriter(){
+    if(i < text.length){
         document.getElementById("text").innerHTML += text.charAt(i);
         i++;
         setTimeout(typeWriter, 25);
     } else {
-        document.getElementById("afterText").style.display = "block";
+        document.getElementById("afterText").style.display="block";
         document.getElementById("text").classList.remove("cursor");
     }
 }
-typeWriter();
+
+// ❤️ Hearts
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.innerHTML="❤️";
+    h.className="heart";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},300);
+
+// 💍 YES
+function yes(){
+    document.getElementById("popup").style.display="block";
+}
+
+// 😂 NO move
+let noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+    noBtn.style.left=Math.random()*80+"vw";
+    noBtn.style.top=Math.random()*80+"vh";
+});
 </script>
 
 </body>
