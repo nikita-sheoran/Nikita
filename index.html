@@ -4,228 +4,798 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Nikita ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #e8537a;
+  --deep: #c0395a;
+  --blush: #ffd6e0;
+  --gold: #f9c74f;
+  --dark: #0d0608;
+  --glass: rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.15);
+}
+
 html { scroll-behavior: smooth; }
 
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    text-align: center;
-    overflow-y: auto;
-
-    background: url('file_00000000d1dc720886a68383aa6016ef.png') no-repeat center center fixed;
-    background-size: cover;
+  font-family: 'Lato', sans-serif;
+  color: white;
+  background: var(--dark);
+  overflow: hidden;
+  height: 100vh;
 }
 
-/* Dark overlay */
-body::before {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    top: 0;
-    left: 0;
-    z-index: -1;
+/* ─── PARTICLE CANVAS ─── */
+#canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* Lock */
+/* ─── FLOATING HEARTS ─── */
+.heart {
+  position: fixed;
+  top: -30px;
+  font-size: 20px;
+  animation: fall linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+}
+@keyframes fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(105vh) rotate(30deg); opacity: 0; }
+}
+
+/* ─── SCREENS ─── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 5;
+  transition: opacity 0.6s ease;
+}
+.screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── LOCK SCREEN ─── */
 #lockScreen {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 10;
+  background: radial-gradient(ellipse at 50% 30%, #3a0a1a 0%, #0d0608 70%);
 }
 
-#lockScreen input {
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: none;
-    width: 250px;
-    text-align: center;
+.lock-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 48px 40px;
+  width: min(420px, 90vw);
+  box-shadow: 0 0 80px rgba(232, 83, 122, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
 }
 
-#lockScreen button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: pink;
+.lock-icon {
+  font-size: 52px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
-/* Intro */
+.lock-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--blush);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.lock-card input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 50px;
+  border: 2px solid rgba(232,83,122,0.4);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  text-align: center;
+  outline: none;
+  transition: border 0.3s;
+  font-family: 'Lato', sans-serif;
+}
+.lock-card input::placeholder { color: rgba(255,255,255,0.4); }
+.lock-card input:focus { border-color: var(--rose); }
+
+.btn {
+  padding: 13px 32px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover { transform: scale(1.05); }
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  color: white;
+  box-shadow: 0 4px 20px rgba(232,83,122,0.4);
+  width: 100%;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1.5px solid var(--rose);
+  color: var(--blush);
+}
+
+/* Chat button on lock screen */
+.chat-lock-btn {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6);
+  padding: 10px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  transition: all 0.3s;
+}
+.chat-lock-btn:hover {
+  border-color: var(--rose);
+  color: var(--blush);
+}
+
+#error {
+  color: #ff6b8a;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+/* ─── USER SELECT SCREEN ─── */
+#userSelectScreen {
+  background: radial-gradient(ellipse at 50% 30%, #1a0a12 0%, #0d0608 70%);
+}
+
+.user-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 48px 40px;
+  width: min(400px, 90vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 0 60px rgba(232,83,122,0.15);
+  z-index: 2;
+}
+
+.user-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--blush);
+}
+
+.user-btns {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.user-btn {
+  flex: 1;
+  padding: 18px;
+  border-radius: 20px;
+  border: 2px solid var(--glass-border);
+  background: var(--glass);
+  color: white;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.user-btn:hover {
+  border-color: var(--rose);
+  background: rgba(232,83,122,0.15);
+  transform: translateY(-3px);
+}
+.user-btn .avatar {
+  font-size: 36px;
+}
+
+/* ─── INTRO SCREEN ─── */
 #intro {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: black;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  background: radial-gradient(ellipse at 50% 30%, #2a0a14 0%, #0d0608 70%);
+}
+
+.intro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  z-index: 2;
+}
+
+.photo-frame {
+  position: relative;
+}
+.photo-frame::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 28px;
+  background: linear-gradient(45deg, var(--rose), var(--gold), var(--rose));
+  animation: spinBorder 3s linear infinite;
+  z-index: -1;
+}
+@keyframes spinBorder {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
 
 .photo {
-    width: 230px;
-    border-radius: 20px;
-    box-shadow: 0 0 30px pink;
+  width: min(220px, 60vw);
+  border-radius: 20px;
+  display: block;
+  border: 4px solid var(--dark);
 }
 
-/* Main */
+.intro-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--blush);
+  text-shadow: 0 0 30px rgba(232,83,122,0.8);
+  text-align: center;
+}
+
+/* ─── MAIN SCREEN ─── */
 #main {
-    display: none;
-    padding: 20px;
-    max-width: 700px;
-    margin: auto;
+  background: radial-gradient(ellipse at 50% 0%, #2a0614 0%, #0d0608 60%);
+  overflow-y: auto;
+  align-items: flex-start;
 }
 
-h1 {
-    font-size: 40px;
-    background: linear-gradient(45deg, red, yellow, cyan);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.main-inner {
+  max-width: 680px;
+  width: 100%;
+  margin: auto;
+  padding: 60px 24px 100px;
+  position: relative;
+  z-index: 2;
 }
 
-h2 {
-    color: pink;
+.main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 8vw, 60px);
+  background: linear-gradient(45deg, #ff8fa3, var(--gold), #ff6b9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  margin-bottom: 8px;
 }
 
-p {
-    font-size: 18px;
-    line-height: 1.7;
-    text-shadow: 0 0 10px pink;
+.main-subtitle {
+  color: var(--blush);
+  font-size: 20px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  margin-bottom: 40px;
+  opacity: 0.85;
 }
 
-/* Typing cursor */
+.letter-box {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 24px;
+  line-height: 1.9;
+  font-size: 17px;
+  text-align: left;
+  box-shadow: 0 0 40px rgba(232,83,122,0.1);
+  white-space: pre-wrap;
+}
+
 .cursor {
-    border-right: 2px solid white;
-    animation: blink 1s infinite;
+  border-right: 2px solid var(--rose);
+  animation: blink 1s infinite;
 }
 @keyframes blink { 50% { border-color: transparent; } }
 
-/* Floating hearts */
-.heart {
-    position: fixed;
-    top:-10px;
-    animation: fall linear infinite;
+.sign-off {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 28px 32px;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: left;
+  color: var(--blush);
 }
-@keyframes fall {
-    to { transform: translateY(100vh); }
+
+.propose-line {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(249,199,79,0.6);
+  font-style: italic;
+  margin-top: 16px;
+}
+
+/* ─── CHAT ─── */
+#chatScreen {
+  background: radial-gradient(ellipse at 50% 0%, #150510 0%, #0d0608 70%);
+}
+
+.chat-container {
+  width: min(480px, 95vw);
+  height: min(700px, 90vh);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 80px rgba(232,83,122,0.15);
+  z-index: 2;
+}
+
+.chat-header {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(232,83,122,0.3), rgba(192,57,90,0.2));
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.chat-back {
+  background: none;
+  border: none;
+  color: var(--blush);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.chat-back:hover { background: rgba(255,255,255,0.1); }
+
+.chat-avatar { font-size: 32px; }
+
+.chat-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--blush);
+}
+.chat-info p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(232,83,122,0.3); border-radius: 2px; }
+
+.msg {
+  max-width: 78%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  word-break: break-word;
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.msg.sent {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  border-bottom-right-radius: 4px;
+}
+.msg.received {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--glass-border);
+  border-bottom-left-radius: 4px;
+}
+
+.msg-label {
+  font-size: 11px;
+  opacity: 0.55;
+  margin-bottom: 3px;
+}
+
+.chat-input-row {
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--glass-border);
+  background: rgba(0,0,0,0.2);
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(232,83,122,0.3);
+  background: rgba(255,255,255,0.07);
+  color: white;
+  font-size: 15px;
+  font-family: 'Lato', sans-serif;
+  outline: none;
+  transition: border 0.3s;
+}
+.chat-input:focus { border-color: var(--rose); }
+.chat-input::placeholder { color: rgba(255,255,255,0.35); }
+
+.send-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(232,83,122,0.4);
+}
+.send-btn:hover { transform: scale(1.1); }
+.send-btn:active { transform: scale(0.9); }
+
+/* Open chat btn on main */
+.open-chat-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  border: none;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(232,83,122,0.5);
+  transition: transform 0.2s;
+  display: none;
+}
+.open-chat-fab:hover { transform: scale(1.1); }
+
+/* date labels in chat */
+.date-label {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin: 4px 0;
 }
 </style>
 </head>
-
 <body>
 
-<!-- 🔐 Lock -->
-<div id="lockScreen">
+<canvas id="canvas"></canvas>
+
+<!-- ─── LOCK SCREEN ─── -->
+<div class="screen" id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-icon">🔐</div>
     <h2>Enter Secret Code ❤️</h2>
-    <input type="text" id="password" placeholder="Type here...">
-    <button onclick="checkPassword()">Unlock 💖</button>
-    <p id="error" style="color:red;"></p>
+    <input type="password" id="password" placeholder="Type secret code..." onkeydown="if(event.key==='Enter') checkPassword()">
+    <button class="btn btn-primary" onclick="checkPassword()">Unlock 💖</button>
+    <p id="error"></p>
+    <button class="chat-lock-btn" onclick="openChatFromLock()">💬 Open Chat</button>
+  </div>
 </div>
 
-<!-- Intro -->
-<div id="intro">
-    <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo">
+<!-- ─── USER SELECT (for chat from lock) ─── -->
+<div class="screen hidden" id="userSelectScreen">
+  <div class="user-card">
+    <div style="font-size:36px;">💬</div>
+    <h2>Tum kaun ho?</h2>
+    <div class="user-btns">
+      <button class="user-btn" onclick="selectUser('nikita')">
+        <span class="avatar">👩</span>
+        Nikita
+      </button>
+      <button class="user-btn" onclick="selectUser('mukesh')">
+        <span class="avatar">👨</span>
+        Mukesh
+      </button>
+    </div>
+    <button class="btn-secondary btn" onclick="goBack('userSelectScreen','lockScreen')">← Wapas</button>
+  </div>
+</div>
+
+<!-- ─── INTRO SCREEN ─── -->
+<div class="screen hidden" id="intro">
+  <div class="intro-card">
+    <div class="photo-frame">
+      <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo" onerror="this.style.display='none'">
+    </div>
     <h2>💖 Special Surprise For You 💖</h2>
-    <button onclick="start()">Start ❤️</button>
+    <button class="btn btn-primary" onclick="startMain()" style="width:220px;">
+      Start ❤️
+    </button>
+  </div>
+</div>
+
+<!-- ─── MAIN SCREEN ─── -->
+<div class="screen hidden" id="main" style="overflow-y:auto; align-items:flex-start;">
+  <div class="main-inner">
+    <h1 class="main-title">My Dear Nikita ❤️</h1>
+    <p class="main-subtitle">🎂 Happy Birthday Meri Jaan 🎂</p>
+
+    <div class="letter-box">
+      <p id="text" class="cursor"></p>
+    </div>
+
+    <div class="sign-off">
+      I love you more than words can ever explain ❤️<br><br>
+      <div class="propose-line">💍 Kya tum hamesha ke liye meri zindagi ka hissa banogi?</div>
+      <br>
+      Hamesha tumhara,<br>
+      <strong style="font-family:'Playfair Display',serif; font-size:20px; color:var(--gold);">Mukesh</strong>
+    </div>
+  </div>
+</div>
+
+<!-- FAB chat button on main -->
+<button class="open-chat-fab" id="chatFab" onclick="openChatMain()" title="Open Chat">💬</button>
+
+<!-- ─── CHAT SCREEN ─── -->
+<div class="screen hidden" id="chatScreen">
+  <div class="chat-container">
+    <div class="chat-header">
+      <button class="chat-back" id="chatBack" onclick="closeChat()">←</button>
+      <div class="chat-avatar" id="chatAvatar">💑</div>
+      <div class="chat-info">
+        <h3 id="chatTitle">Nikita & Mukesh</h3>
+        <p>Private Chat 💕</p>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="date-label">Today 💕</div>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="Message likhein..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <button class="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
 </div>
 
 <!-- Music -->
 <audio id="music" loop>
-<source src="Trim_AUD-20260318-WA0000_1.m4a">
+  <source src="Trim_AUD-20260318-WA0000_1.m4a">
 </audio>
 
-<!-- Main -->
-<div id="main">
-<h1>My Dear Nikita ❤️</h1>
-<h2>Happy Birthday meri jaan 🎂❤️</h2>
-
-<p id="text" class="cursor"></p>
-
-<p style="margin-top:20px;">
-I love you more than words can ever explain ❤️<br><br>
-Hamesha tumhara,<br>
-Mukesh
-</p>
-
-</div>
-
 <script>
-// Password + music start
-function checkPassword(){
- let v=document.getElementById("password").value.toLowerCase().trim();
- if(v==="i love you mera aadmi 1"){
-  document.getElementById("music").play().catch(()=>{});
-  document.getElementById("lockScreen").style.display="none";
-  document.getElementById("intro").style.display="flex";
- } else {
-  document.getElementById("error").innerText="Wrong code 😢";
- }
+/* ─── STATE ─── */
+let currentUser = null;   // 'nikita' | 'mukesh'
+let chatFromLock = false;
+let mainActive = false;
+let messages = JSON.parse(localStorage.getItem('nk_msgs') || '[]');
+
+/* ─── CANVAS PARTICLES ─── */
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth; canvas.height = innerHeight;
+window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; });
+
+const particles = Array.from({length: 60}, () => ({
+  x: Math.random() * innerWidth,
+  y: Math.random() * innerHeight,
+  r: Math.random() * 2 + 0.5,
+  dx: (Math.random() - 0.5) * 0.3,
+  dy: (Math.random() - 0.5) * 0.3,
+  alpha: Math.random() * 0.5 + 0.1
+}));
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(232, 83, 122, ${p.alpha})`;
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy;
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* ─── FLOATING HEARTS ─── */
+setInterval(() => {
+  const emojis = ['❤️','💕','💗','💖','🌹','✨'];
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.animationDuration = (Math.random() * 4 + 3) + 's';
+  h.style.fontSize = (Math.random() * 14 + 12) + 'px';
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 7000);
+}, 600);
+
+/* ─── SCREEN HELPERS ─── */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 }
 
-// Start
-function start(){
- document.getElementById("intro").style.display="none";
- document.getElementById("main").style.display="block";
- typeWriter();
+function goBack(from, to) {
+  showScreen(to);
 }
 
-// Full letter
-let text = `
-Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
-
-Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
-
-Nikita, hamara rishta shayad shabdon me samjhana mushkil hai, lekin mere dil me tumhari jagah bilkul ek wife jaisi hi hai. Tum mere liye sirf ek saathi nahi ho, balki meri aadat ho, meri khushi ho aur meri poori duniya ho. Main jab bhi apna future sochta hoon to usme har jagah sirf tum hi nazar aati ho.
-
-Main tumhare saath har khushi baantna chahta hoon, har mushkil me tumhara haath pakad kar chalna chahta hoon. Main chahta hoon ki jab zindagi me koi accha pal aaye to sabse pehle tumhare saath share karu, aur jab koi mushkil aaye to hum dono milkar uska saamna karein.
-
-Aaj tumhare birthday ke is khoobsurat din par main tumse dil ki ek baat kehna chahta hoon. Yeh sirf ek sawal nahi hai, balki meri poori zindagi ka sapna hai.
-
-Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi?
-Kya tum meri wife banogi? 💍
-
-Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, tumhara saath kabhi nahi chhodunga. Zindagi me chahe kitni bhi mushkilein aaye, main hamesha tumhare saath khada rahunga. Main tumhe hamesha khush rakhne ki puri koshish karunga, kyunki tumhari khushi hi meri sabse badi khushi hai.
-
-Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho jitni tum meri zindagi me special ho.
-
-I love you more than words can ever explain. ❤️
-
-Hamesha tumhara,
-Mukesh`;
-
-let i = 0;
-function typeWriter(){
- if(i < text.length){
-  document.getElementById("text").innerHTML += text.charAt(i);
-  i++;
-  setTimeout(typeWriter, 25);
- } else {
-  document.getElementById("text").classList.remove("cursor");
- }
+/* ─── PASSWORD ─── */
+function checkPassword() {
+  const v = document.getElementById('password').value.toLowerCase().trim();
+  if (v === 'i love you mera aadmi 1') {
+    document.getElementById('music').play().catch(() => {});
+    showScreen('intro');
+  } else {
+    const err = document.getElementById('error');
+    err.textContent = 'Wrong code 😢 Try again!';
+    document.getElementById('password').style.borderColor = '#ff4466';
+    setTimeout(() => {
+      err.textContent = '';
+      document.getElementById('password').style.borderColor = '';
+    }, 2000);
+  }
 }
 
-// Hearts
-setInterval(()=>{
- let h=document.createElement("div");
- h.innerHTML="❤️";
- h.className="heart";
- h.style.left=Math.random()*100+"vw";
- h.style.animationDuration=(Math.random()*3+2)+"s";
- document.body.appendChild(h);
- setTimeout(()=>h.remove(),5000);
-},300);
-</script>
+/* ─── CHAT FROM LOCK ─── */
+function openChatFromLock() {
+  chatFromLock = true;
+  showScreen('userSelectScreen');
+}
 
-</body>
-</html>
+function selectUser(user) {
+  currentUser = user;
+  if (chatFromLock) {
+    openChat();
+  }
+}
+
+/* ─── INTRO → MAIN ─── */
+function startMain() {
+  mainActive = true;
+  showScreen('main');
+  document.getElementById('chatFab').style.display = 'flex';
+  typeWriter();
+}
+
+/* ─── CHAT FROM MAIN ─── */
+function openChatMain() {
+  if (!currentUser) {
+    // Ask who they are first
+    chatFromLock = false;
+    // Inline: simple prompt using user select screen
+    document.getElementById('chatBack').onclick = () => { showScreen('main'); };
+    showScreen('userSelectScreen');
+    // Override selectUser temporarily
+    const orig = window.selectUser;
+    window.selectUser = function(u) {
+      currentUser = u;
+      window.selectUser = orig;
+      openChat();
+    };
+  } else {
+    openChat();
+  }
+}
+
+function openChat() {
+  // set chat header
+  const avatar = document.getElementById('chatAvatar');
+  const title = document.getElementById('chatTitle');
+  if (currentUser === 'nikita') {
+    avatar.textContent = '👩';
+    title.textContent = 'Mukesh ke liye ❤️';
+  } else {
+    avatar.textContent = '👨';
+    title.textContent = 'Nikita ke liye ❤️';
+  }
+  document.getElementById('chatBack').onclick = closeChat;
+  renderMessages();
+  showScreen('chatScreen');
+}
+
+function closeChat() {
+  if (mainActive) {
+    showScreen('main');
+    document.getElementById('chatFab').style.display = 'flex';
+  } else {
+    showScreen('lockScreen');
+  }
+}
+
+/* ─── MESSAGES ─── */
+function renderMessages() {
+  const box = document.getElementById('chatMessages');
+  box.innerHTML = '<div class="date-label">Today 💕</div>';
+
+  messages.forEach(m => {
+    const div = document.createElement('div');
+    // If currentUser is nikita: nikita's msgs = sent, mukesh's = received
+    // If currentUser is mukesh: mukesh's msgs = sent, nikita's = received
+    const isMine = m.from === currentUser;
+    div.className = 'msg ' + (isMine ? 'sent' : 'received');
+
+    const label = document.createElement('div');
+    label.className = 'msg-label';
+    label.textContent = m.from === 'nikita' ? '👩 Nikita' : '👨 Mukesh';
+    div.appendChild(label);
+
+    const text = document.createElement('span');
+    text.textContent = m.text;
+    div.appendChild(text);
+
+    box.appendChild(div);
+  });
+
+  setTimeout(() => { box.scrollTop = box.scrollHeight; }, 50);
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !currentUser) return;
+
+  const msg = { from: currentUser, text, time: Date.now() };
+  messages.push(msg);
+  localStorage.setItem('nk_msgs', JSON.stringify(messages));
+  input.value = '';
+  renderMessages();
+}
+
+/* ─── TYPEWRITER ─── */
+const letter = `Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
+
+Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab
