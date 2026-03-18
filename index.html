@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Nikita ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 :root {
   --rose: #e8537a;
   --deep: #c0395a;
@@ -18,549 +17,337 @@
   --glass: rgba(255,255,255,0.07);
   --glass-border: rgba(255,255,255,0.15);
 }
-
+ 
 html { scroll-behavior: smooth; }
-
+ 
 body {
   font-family: 'Lato', sans-serif;
   color: white;
   background: var(--dark);
-  overflow: hidden;
   height: 100vh;
+  overflow: hidden;
 }
-
-/* ─── PARTICLE CANVAS ─── */
+ 
 #canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
 }
-
-/* ─── FLOATING HEARTS ─── */
+ 
 .heart {
-  position: fixed;
-  top: -30px;
-  font-size: 20px;
-  animation: fall linear infinite;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.7;
+  position: fixed; top: -30px;
+  animation: fall linear forwards;
+  pointer-events: none; z-index: 1; opacity: 0.75;
 }
 @keyframes fall {
   0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-  100% { transform: translateY(105vh) rotate(30deg); opacity: 0; }
+  100% { transform: translateY(110vh) rotate(25deg); opacity: 0; }
 }
-
+ 
 /* ─── SCREENS ─── */
 .screen {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
   z-index: 5;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease, visibility 0.5s;
 }
 .screen.hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
-
-/* ─── LOCK SCREEN ─── */
+ 
+/* ─── LOCK ─── */
 #lockScreen {
   background: radial-gradient(ellipse at 50% 30%, #3a0a1a 0%, #0d0608 70%);
 }
-
 .lock-card {
   background: var(--glass);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(20px);
   border-radius: 30px;
-  padding: 48px 40px;
-  width: min(420px, 90vw);
-  box-shadow: 0 0 80px rgba(232, 83, 122, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  z-index: 2;
+  padding: 44px 36px;
+  width: min(400px, 92vw);
+  box-shadow: 0 0 80px rgba(232,83,122,0.2);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 18px;
+  position: relative; z-index: 2;
 }
-
-.lock-icon {
-  font-size: 52px;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
+.lock-icon { font-size: 52px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+ 
 .lock-card h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  color: var(--blush);
-  text-align: center;
-  line-height: 1.4;
+  font-size: 24px; color: var(--blush);
+  text-align: center; line-height: 1.4;
 }
-
-.lock-card input {
-  width: 100%;
-  padding: 14px 20px;
-  font-size: 16px;
-  border-radius: 50px;
+ 
+.pw-wrap { position: relative; width: 100%; }
+.pw-wrap input {
+  width: 100%; padding: 14px 50px 14px 20px;
+  font-size: 16px; border-radius: 50px;
   border: 2px solid rgba(232,83,122,0.4);
   background: rgba(255,255,255,0.08);
-  color: white;
-  text-align: center;
-  outline: none;
-  transition: border 0.3s;
+  color: white; text-align: center;
+  outline: none; transition: border 0.3s;
   font-family: 'Lato', sans-serif;
 }
-.lock-card input::placeholder { color: rgba(255,255,255,0.4); }
-.lock-card input:focus { border-color: var(--rose); }
-
+.pw-wrap input::placeholder { color: rgba(255,255,255,0.4); }
+.pw-wrap input:focus { border-color: var(--rose); }
+ 
+.eye-btn {
+  position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  cursor: pointer; font-size: 20px;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s; line-height: 1; padding: 0;
+}
+.eye-btn:hover { color: var(--rose); }
+ 
 .btn {
-  padding: 13px 32px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 600;
+  padding: 13px 28px; border-radius: 50px; border: none;
+  cursor: pointer; font-size: 16px;
+  font-family: 'Lato', sans-serif; font-weight: 600;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.btn:hover { transform: scale(1.05); }
+.btn:hover  { transform: scale(1.05); }
 .btn:active { transform: scale(0.97); }
-
 .btn-primary {
   background: linear-gradient(135deg, var(--rose), var(--deep));
-  color: white;
+  color: white; width: 100%;
   box-shadow: 0 4px 20px rgba(232,83,122,0.4);
-  width: 100%;
 }
-
 .btn-secondary {
   background: transparent;
   border: 1.5px solid var(--rose);
   color: var(--blush);
 }
-
-/* Chat button on lock screen */
-.chat-lock-btn {
+.btn-ghost {
   background: transparent;
   border: 1.5px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.6);
-  padding: 10px 24px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: 'Lato', sans-serif;
-  transition: all 0.3s;
+  color: rgba(255,255,255,0.55);
+  font-size: 14px; padding: 10px 22px;
 }
-.chat-lock-btn:hover {
-  border-color: var(--rose);
-  color: var(--blush);
-}
-
-#error {
-  color: #ff6b8a;
-  font-size: 14px;
-  min-height: 20px;
-}
-
-/* ─── USER SELECT SCREEN ─── */
+.btn-ghost:hover { border-color: var(--rose); color: var(--blush); }
+ 
+#error { color: #ff6b8a; font-size: 14px; min-height: 18px; text-align:center; }
+ 
+/* ─── USER SELECT ─── */
 #userSelectScreen {
   background: radial-gradient(ellipse at 50% 30%, #1a0a12 0%, #0d0608 70%);
 }
-
 .user-card {
   background: var(--glass);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(20px);
   border-radius: 30px;
-  padding: 48px 40px;
-  width: min(400px, 90vw);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  padding: 44px 36px;
+  width: min(380px, 92vw);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 22px;
   box-shadow: 0 0 60px rgba(232,83,122,0.15);
   z-index: 2;
 }
-
 .user-card h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  color: var(--blush);
+  font-size: 22px; color: var(--blush);
 }
-
-.user-btns {
-  display: flex;
-  gap: 16px;
-  width: 100%;
-}
-
+.user-btns { display: flex; gap: 14px; width: 100%; }
 .user-btn {
-  flex: 1;
-  padding: 18px;
-  border-radius: 20px;
+  flex: 1; padding: 18px 10px; border-radius: 20px;
   border: 2px solid var(--glass-border);
-  background: var(--glass);
-  color: white;
-  cursor: pointer;
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  background: var(--glass); color: white;
+  cursor: pointer; font-family: 'Playfair Display', serif;
+  font-size: 17px; transition: all 0.3s;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
 }
 .user-btn:hover {
   border-color: var(--rose);
   background: rgba(232,83,122,0.15);
   transform: translateY(-3px);
 }
-.user-btn .avatar {
-  font-size: 36px;
-}
-
-/* ─── INTRO SCREEN ─── */
+.user-btn .ava { font-size: 36px; }
+ 
+/* ─── INTRO ─── */
 #intro {
   background: radial-gradient(ellipse at 50% 30%, #2a0a14 0%, #0d0608 70%);
 }
-
 .intro-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 24px; z-index: 2;
 }
-
-.photo-frame {
-  position: relative;
-}
+.photo-frame { position: relative; }
 .photo-frame::before {
-  content: '';
-  position: absolute;
-  inset: -8px;
+  content: ''; position: absolute; inset: -8px;
   border-radius: 28px;
   background: linear-gradient(45deg, var(--rose), var(--gold), var(--rose));
-  animation: spinBorder 3s linear infinite;
-  z-index: -1;
+  animation: huerot 3s linear infinite; z-index: -1;
 }
-@keyframes spinBorder {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-
+@keyframes huerot { 100%{ filter: hue-rotate(360deg); } }
 .photo {
-  width: min(220px, 60vw);
-  border-radius: 20px;
-  display: block;
-  border: 4px solid var(--dark);
+  width: min(200px, 55vw); border-radius: 20px;
+  display: block; border: 4px solid var(--dark);
 }
-
 .intro-card h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
+  font-family: 'Playfair Display', serif; font-size: 24px;
   color: var(--blush);
   text-shadow: 0 0 30px rgba(232,83,122,0.8);
   text-align: center;
 }
-
-/* ─── MAIN SCREEN ─── */
+ 
+/* ─── MAIN ─── */
 #main {
   background: radial-gradient(ellipse at 50% 0%, #2a0614 0%, #0d0608 60%);
   overflow-y: auto;
   align-items: flex-start;
+  justify-content: flex-start;
 }
-
 .main-inner {
-  max-width: 700px;
-  width: 100%;
-  margin: auto;
-  padding: 60px 20px 120px;
-  position: relative;
-  z-index: 2;
+  max-width: 700px; width: 100%;
+  margin: 0 auto;
+  padding: 56px 18px 130px;
+  position: relative; z-index: 2;
 }
-
-/* ── Hero Header ── */
-.hero-header {
-  text-align: center;
-  margin-bottom: 56px;
-  position: relative;
-}
-
+.hero-header { text-align: center; margin-bottom: 48px; }
 .hero-header::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 2px;
+  content: ''; display: block; width: 80px; height: 2px;
   background: linear-gradient(90deg, transparent, var(--rose), transparent);
-  margin: 24px auto 0;
+  margin: 20px auto 0;
 }
-
 .main-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(38px, 9vw, 68px);
-  background: linear-gradient(135deg, #ffb3c6 0%, var(--gold) 45%, #ff6b9d 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.15;
-  margin-bottom: 10px;
-  letter-spacing: -1px;
-  filter: drop-shadow(0 0 30px rgba(232,83,122,0.4));
+  font-size: clamp(34px, 8vw, 62px);
+  background: linear-gradient(135deg, #ffb3c6, var(--gold), #ff6b9d);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1.15;
+  filter: drop-shadow(0 0 28px rgba(232,83,122,0.4));
 }
-
 .main-subtitle {
-  color: var(--blush);
-  font-size: 18px;
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  opacity: 0.8;
-  letter-spacing: 1px;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 17px; color: var(--blush); opacity: 0.8; margin-top: 8px;
 }
-
-/* ── Letter Paragraphs ── */
+ 
 .letter-para {
   position: relative;
   background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 28px 32px;
-  margin-bottom: 18px;
-  font-size: 17px;
-  line-height: 2;
-  text-align: left;
-  color: rgba(255,255,255,0.92);
-  box-shadow:
-    0 4px 30px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  backdrop-filter: blur(16px); border-radius: 20px;
+  padding: 26px 30px; margin-bottom: 16px;
+  font-size: 16.5px; line-height: 2;
+  color: rgba(255,255,255,0.91);
+  box-shadow: 0 4px 28px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07);
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
   overflow: hidden;
 }
-
-.letter-para.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Left accent bar */
+.letter-para.vis { opacity: 1; transform: translateY(0); }
 .letter-para::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 20%; bottom: 20%;
-  width: 3px;
-  border-radius: 2px;
+  content: ''; position: absolute;
+  left: 0; top: 20%; bottom: 20%; width: 3px; border-radius: 2px;
   background: linear-gradient(to bottom, transparent, var(--rose), transparent);
 }
-
-/* Quote icon */
-.letter-para.has-quote::after {
-  content: '"';
-  position: absolute;
-  top: -10px; right: 20px;
-  font-family: 'Playfair Display', serif;
-  font-size: 100px;
-  line-height: 1;
-  color: rgba(232,83,122,0.08);
-  pointer-events: none;
-}
-
-/* Para number */
-.para-num {
-  display: inline-block;
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--rose);
-  opacity: 0.7;
-  margin-bottom: 10px;
-  font-family: 'Lato', sans-serif;
-}
-
-/* ── Special highlight para ── */
 .letter-para.highlight {
-  background: linear-gradient(135deg, rgba(232,83,122,0.15), rgba(192,57,90,0.08));
-  border-color: rgba(232,83,122,0.3);
-  box-shadow:
-    0 4px 40px rgba(232,83,122,0.15),
-    inset 0 1px 0 rgba(232,83,122,0.2);
+  background: linear-gradient(135deg, rgba(232,83,122,0.14), rgba(192,57,90,0.07));
+  border-color: rgba(232,83,122,0.28);
+  box-shadow: 0 4px 36px rgba(232,83,122,0.14), inset 0 1px 0 rgba(232,83,122,0.18);
 }
-
-/* ── Sign-off / Proposal ── */
+.letter-para.has-quote::after {
+  content: '"'; position: absolute; top: -12px; right: 18px;
+  font-family: 'Playfair Display', serif; font-size: 96px; line-height: 1;
+  color: rgba(232,83,122,0.07); pointer-events: none;
+}
+.para-num {
+  display: inline-block; font-size: 11px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--rose); opacity: 0.75;
+  margin-bottom: 10px; font-family: 'Lato', sans-serif;
+}
+ 
 .sign-off {
-  position: relative;
-  margin-top: 8px;
-  padding: 40px 36px;
-  border-radius: 24px;
-  text-align: center;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
-  background: linear-gradient(135deg, rgba(232,83,122,0.18), rgba(249,199,79,0.08));
-  border: 1px solid rgba(232,83,122,0.3);
-  box-shadow: 0 0 60px rgba(232,83,122,0.12);
+  position: relative; margin-top: 8px;
+  padding: 38px 32px; border-radius: 24px;
+  text-align: center; overflow: hidden;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  background: linear-gradient(135deg, rgba(232,83,122,0.17), rgba(249,199,79,0.07));
+  border: 1px solid rgba(232,83,122,0.28);
+  box-shadow: 0 0 56px rgba(232,83,122,0.12);
 }
-.sign-off.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.sign-off.vis { opacity: 1; transform: translateY(0); }
 .sign-off-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(232,83,122,0.15) 0%, transparent 70%);
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,83,122,0.14) 0%, transparent 70%);
   pointer-events: none;
 }
-
-.love-line {
-  font-size: 17px;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 28px;
-  line-height: 1.8;
-}
-
-.propose-line {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(20px, 4vw, 28px);
-  color: var(--gold);
-  text-shadow: 0 0 30px rgba(249,199,79,0.5), 0 0 60px rgba(249,199,79,0.3);
-  font-style: italic;
-  margin: 0 0 32px;
-  line-height: 1.5;
-  animation: goldGlow 3s ease-in-out infinite;
-}
-
-@keyframes goldGlow {
-  0%, 100% { text-shadow: 0 0 20px rgba(249,199,79,0.4), 0 0 40px rgba(249,199,79,0.2); }
-  50%       { text-shadow: 0 0 40px rgba(249,199,79,0.8), 0 0 80px rgba(249,199,79,0.4); }
-}
-
-.signature {
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 6px;
-}
-
-.signature-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  font-style: italic;
-  background: linear-gradient(135deg, var(--rose), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 20px rgba(232,83,122,0.5));
-}
-
-/* Ring pulse */
 .ring-emoji {
-  font-size: 36px;
-  display: block;
-  margin-bottom: 16px;
-  animation: ringPulse 2s ease-in-out infinite;
+  font-size: 38px; display: block; margin-bottom: 14px;
+  animation: ringPulse 2.2s ease-in-out infinite;
 }
 @keyframes ringPulse {
-  0%, 100% { transform: scale(1) rotate(-5deg); }
-  50%       { transform: scale(1.2) rotate(5deg); }
+  0%,100%{transform:scale(1) rotate(-5deg)} 50%{transform:scale(1.18) rotate(5deg)}
 }
-
-.cursor {
-  border-right: 2px solid var(--rose);
-  animation: blink 1s infinite;
+.propose-line {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(19px, 4vw, 26px);
+  color: var(--gold); font-style: italic;
+  margin-bottom: 28px; line-height: 1.5;
+  animation: goldGlow 3s ease-in-out infinite;
 }
-@keyframes blink { 50% { border-color: transparent; } }
-
+@keyframes goldGlow {
+  0%,100%{text-shadow:0 0 20px rgba(249,199,79,0.4),0 0 40px rgba(249,199,79,0.2)}
+  50%{text-shadow:0 0 40px rgba(249,199,79,0.8),0 0 80px rgba(249,199,79,0.4)}
+}
+.love-line { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 24px; line-height: 1.9; }
+.signature { font-family: 'Playfair Display', serif; font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+.signature-name {
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: 30px;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 18px rgba(232,83,122,0.5));
+}
+ 
 /* ─── CHAT ─── */
 #chatScreen {
   background: radial-gradient(ellipse at 50% 0%, #150510 0%, #0d0608 70%);
 }
-
 .chat-container {
-  width: min(480px, 95vw);
-  height: min(700px, 90vh);
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(20px);
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 0 80px rgba(232,83,122,0.15);
-  z-index: 2;
+  width: min(480px, 96vw); height: min(680px, 88vh);
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px); border-radius: 28px;
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 0 70px rgba(232,83,122,0.14); z-index: 2;
 }
-
 .chat-header {
-  padding: 20px 24px;
-  background: linear-gradient(135deg, rgba(232,83,122,0.3), rgba(192,57,90,0.2));
+  padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(232,83,122,0.28), rgba(192,57,90,0.18));
   border-bottom: 1px solid var(--glass-border);
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
 }
-
 .chat-back {
-  background: none;
-  border: none;
-  color: var(--blush);
-  cursor: pointer;
-  font-size: 20px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  transition: background 0.2s;
+  background: none; border: none; color: var(--blush);
+  cursor: pointer; font-size: 22px; padding: 4px 8px;
+  border-radius: 8px; transition: background 0.2s; line-height: 1;
 }
 .chat-back:hover { background: rgba(255,255,255,0.1); }
-
-.chat-avatar { font-size: 32px; }
-
-.chat-info h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  color: var(--blush);
-}
-.chat-info p {
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-}
-
+.chat-avatar { font-size: 30px; }
+.chat-info h3 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--blush); }
+.chat-info p  { font-size: 12px; color: rgba(255,255,255,0.45); }
+ 
 .chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex: 1; overflow-y: auto;
+  padding: 16px; display: flex; flex-direction: column; gap: 10px;
   scroll-behavior: smooth;
 }
 .chat-messages::-webkit-scrollbar { width: 4px; }
 .chat-messages::-webkit-scrollbar-thumb { background: rgba(232,83,122,0.3); border-radius: 2px; }
-
+ 
 .msg {
-  max-width: 78%;
-  padding: 12px 16px;
-  border-radius: 18px;
-  font-size: 15px;
-  line-height: 1.5;
-  word-break: break-word;
-  animation: popIn 0.3s ease;
+  max-width: 76%; padding: 11px 15px; border-radius: 18px;
+  font-size: 14.5px; line-height: 1.55; word-break: break-word;
+  animation: popIn 0.25s ease;
 }
-@keyframes popIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
+@keyframes popIn { from{transform:scale(0.82);opacity:0} to{transform:scale(1);opacity:1} }
 .msg.sent {
   align-self: flex-end;
   background: linear-gradient(135deg, var(--rose), var(--deep));
@@ -572,166 +359,129 @@ body {
   border: 1px solid var(--glass-border);
   border-bottom-left-radius: 4px;
 }
-
-.msg-label {
-  font-size: 11px;
-  opacity: 0.55;
-  margin-bottom: 3px;
-}
-
+.msg-label { font-size: 10.5px; opacity: 0.5; margin-bottom: 3px; }
+ 
 .chat-input-row {
-  padding: 16px;
-  display: flex;
-  gap: 10px;
+  padding: 14px; display: flex; gap: 10px;
   border-top: 1px solid var(--glass-border);
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.18); flex-shrink: 0;
 }
-
 .chat-input {
-  flex: 1;
-  padding: 12px 18px;
-  border-radius: 50px;
+  flex: 1; padding: 12px 16px; border-radius: 50px;
   border: 1.5px solid rgba(232,83,122,0.3);
-  background: rgba(255,255,255,0.07);
-  color: white;
-  font-size: 15px;
-  font-family: 'Lato', sans-serif;
-  outline: none;
-  transition: border 0.3s;
+  background: rgba(255,255,255,0.07); color: white;
+  font-size: 14.5px; font-family: 'Lato', sans-serif;
+  outline: none; transition: border 0.3s;
 }
 .chat-input:focus { border-color: var(--rose); }
-.chat-input::placeholder { color: rgba(255,255,255,0.35); }
-
+.chat-input::placeholder { color: rgba(255,255,255,0.32); }
 .send-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 46px; height: 46px; border-radius: 50%;
   background: linear-gradient(135deg, var(--rose), var(--deep));
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(232,83,122,0.4);
+  border: none; color: white; font-size: 18px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(232,83,122,0.4); transition: transform 0.2s; flex-shrink: 0;
 }
-.send-btn:hover { transform: scale(1.1); }
+.send-btn:hover  { transform: scale(1.1); }
 .send-btn:active { transform: scale(0.9); }
-
-/* Open chat btn on main */
-.open-chat-fab {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 10;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+.date-label { text-align: center; font-size: 11.5px; color: rgba(255,255,255,0.32); margin: 2px 0; }
+ 
+.chat-fab {
+  position: fixed; bottom: 26px; right: 26px; z-index: 10;
+  width: 58px; height: 58px; border-radius: 50%;
   background: linear-gradient(135deg, var(--rose), var(--deep));
-  border: none;
-  color: white;
-  font-size: 26px;
-  cursor: pointer;
-  box-shadow: 0 6px 25px rgba(232,83,122,0.5);
-  transition: transform 0.2s;
-  display: none;
+  border: none; color: white; font-size: 24px; cursor: pointer;
+  box-shadow: 0 6px 22px rgba(232,83,122,0.5); transition: transform 0.2s;
+  display: none; align-items: center; justify-content: center;
 }
-.open-chat-fab:hover { transform: scale(1.1); }
-
-/* date labels in chat */
-.date-label {
-  text-align: center;
-  font-size: 12px;
-  color: rgba(255,255,255,0.35);
-  margin: 4px 0;
-}
+.chat-fab:hover { transform: scale(1.1); }
 </style>
 </head>
 <body>
-
+ 
 <canvas id="canvas"></canvas>
-
-<!-- ─── LOCK SCREEN ─── -->
+ 
+<!-- LOCK -->
 <div class="screen" id="lockScreen">
   <div class="lock-card">
     <div class="lock-icon">🔐</div>
     <h2>Enter Secret Code ❤️</h2>
-    <input type="password" id="password" placeholder="Type secret code..." onkeydown="if(event.key==='Enter') checkPassword()">
+    <div class="pw-wrap">
+      <input type="password" id="password" placeholder="Type secret code..."
+             onkeydown="if(event.key==='Enter') checkPassword()">
+      <button class="eye-btn" id="eyeBtn" onclick="togglePw()" type="button">👁️</button>
+    </div>
     <button class="btn btn-primary" onclick="checkPassword()">Unlock 💖</button>
     <p id="error"></p>
-    <button class="chat-lock-btn" onclick="openChatFromLock()">💬 Open Chat</button>
+    <button class="btn btn-ghost" onclick="openChatFromLock()">💬 Open Chat</button>
   </div>
 </div>
-
-<!-- ─── USER SELECT (for chat from lock) ─── -->
+ 
+<!-- USER SELECT -->
 <div class="screen hidden" id="userSelectScreen">
   <div class="user-card">
-    <div style="font-size:36px;">💬</div>
+    <div style="font-size:38px;">💬</div>
     <h2>Tum kaun ho?</h2>
     <div class="user-btns">
       <button class="user-btn" onclick="selectUser('nikita')">
-        <span class="avatar">👩</span>
-        Nikita
+        <span class="ava">👩</span>Nikita
       </button>
       <button class="user-btn" onclick="selectUser('mukesh')">
-        <span class="avatar">👨</span>
-        Mukesh
+        <span class="ava">👨</span>Mukesh
       </button>
     </div>
-    <button class="btn-secondary btn" onclick="goBack('userSelectScreen','lockScreen')">← Wapas</button>
+    <button class="btn btn-secondary" onclick="goBackFromUserSelect()">← Wapas</button>
   </div>
 </div>
-
-<!-- ─── INTRO SCREEN ─── -->
+ 
+<!-- INTRO -->
 <div class="screen hidden" id="intro">
   <div class="intro-card">
     <div class="photo-frame">
-      <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo" onerror="this.style.display='none'">
+      <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo"
+           onerror="this.style.display='none'">
     </div>
     <h2>💖 Special Surprise For You 💖</h2>
-    <button class="btn btn-primary" onclick="startMain()" style="width:220px;">
+    <button class="btn btn-primary" onclick="startMain()" style="width:210px;">
       Start ❤️
     </button>
   </div>
 </div>
-
-<!-- ─── MAIN SCREEN ─── -->
-<div class="screen hidden" id="main" style="overflow-y:auto; align-items:flex-start;">
+ 
+<!-- MAIN LETTER -->
+<div class="screen hidden" id="main">
   <div class="main-inner">
-
     <div class="hero-header">
       <h1 class="main-title">My Dear Nikita ❤️</h1>
       <p class="main-subtitle">🎂 Happy Birthday Meri Jaan 🎂</p>
     </div>
-
-    <div class="letter-para has-quote" id="p1">
-      <div class="para-num">✦ &nbsp; Ek Khaas Din</div>
+ 
+    <div class="letter-para has-quote">
+      <div class="para-num">✦ &nbsp;Ek Khaas Din</div>
       Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
     </div>
-
-    <div class="letter-para" id="p2">
-      <div class="para-num">✦ &nbsp; Tumhari Muskaan</div>
+ 
+    <div class="letter-para">
+      <div class="para-num">✦ &nbsp;Tumhari Muskaan</div>
       Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
     </div>
-
-    <div class="letter-para highlight" id="p3">
-      <div class="para-num">✦ &nbsp; Mere Dil Ki Baat</div>
+ 
+    <div class="letter-para highlight">
+      <div class="para-num">✦ &nbsp;Mere Dil Ki Baat</div>
       Nikita, hamara rishta shayad shabdon me samjhana mushkil hai, lekin mere dil me tumhari jagah bilkul ek wife jaisi hi hai. Tum mere liye sirf ek saathi nahi ho, balki meri aadat ho, meri khushi ho aur meri poori duniya ho. Main jab bhi apna future sochta hoon to usme har jagah sirf tum hi nazar aati ho.
     </div>
-
-    <div class="letter-para" id="p4">
-      <div class="para-num">✦ &nbsp; Mera Wada</div>
+ 
+    <div class="letter-para">
+      <div class="para-num">✦ &nbsp;Mera Wada</div>
       Main tumhare saath har khushi baantna chahta hoon, har mushkil me tumhara haath pakad kar chalna chahta hoon. Main chahta hoon ki jab zindagi me koi accha pal aaye to sabse pehle tumhare saath share karu, aur jab koi mushkil aaye to hum dono milkar uska saamna karein.
     </div>
-
-    <div class="letter-para highlight has-quote" id="p5">
-      <div class="para-num">✦ &nbsp; Birthday Ka Tohfa</div>
+ 
+    <div class="letter-para highlight has-quote">
+      <div class="para-num">✦ &nbsp;Birthday Ka Tohfa</div>
       Aaj tumhare birthday ke is khoobsurat din par main tumse dil ki ek baat kehna chahta hoon. Yeh sirf ek sawal nahi hai, balki meri poori zindagi ka sapna hai. Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, tumhara saath kabhi nahi chhodunga. Zindagi me chahe kitni bhi mushkilein aaye, main hamesha tumhare saath khada rahunga.
     </div>
-
-    <div class="sign-off" id="signoff">
+ 
+    <div class="sign-off">
       <div class="sign-off-glow"></div>
       <span class="ring-emoji">💍</span>
       <p class="propose-line">"Kya tum hamesha ke liye<br>meri zindagi ka hissa banogi?"</p>
@@ -742,18 +492,17 @@ body {
       <p class="signature">Hamesha tumhara,</p>
       <p class="signature-name">Mukesh</p>
     </div>
-
   </div>
 </div>
-
-<!-- FAB chat button on main -->
-<button class="open-chat-fab" id="chatFab" onclick="openChatMain()" title="Open Chat">💬</button>
-
-<!-- ─── CHAT SCREEN ─── -->
+ 
+<!-- Chat FAB -->
+<button class="chat-fab" id="chatFab" onclick="openChatMain()">💬</button>
+ 
+<!-- CHAT -->
 <div class="screen hidden" id="chatScreen">
   <div class="chat-container">
     <div class="chat-header">
-      <button class="chat-back" id="chatBack" onclick="closeChat()">←</button>
+      <button class="chat-back" onclick="closeChat()">←</button>
       <div class="chat-avatar" id="chatAvatar">💑</div>
       <div class="chat-info">
         <h3 id="chatTitle">Nikita & Mukesh</h3>
@@ -764,22 +513,187 @@ body {
       <div class="date-label">Today 💕</div>
     </div>
     <div class="chat-input-row">
-      <input class="chat-input" id="chatInput" placeholder="Message likhein..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <input class="chat-input" id="chatInput"
+             placeholder="Message likhein..."
+             onkeydown="if(event.key==='Enter') sendMessage()">
       <button class="send-btn" onclick="sendMessage()">➤</button>
     </div>
   </div>
 </div>
-
-<!-- Music -->
+ 
 <audio id="music" loop>
   <source src="Trim_AUD-20260318-WA0000_1.m4a">
 </audio>
-
+ 
 <script>
-/* ─── STATE ─── */
-let currentUser = null;   // 'nikita' | 'mukesh'
-let chatFromLock = false;
-let mainActive = false;
-let messages = JSON.parse(localStorage.getItem('nk_msgs') || '[]');
-
-/* ───
+/* STATE */
+let currentUser = null;
+let mainActive  = false;
+let fromMain    = false;
+let messages    = [];
+try { messages = JSON.parse(localStorage.getItem('nk_msgs') || '[]'); } catch(e){}
+ 
+/* CANVAS */
+const canvas = document.getElementById('canvas');
+const ctx    = canvas.getContext('2d');
+function resizeCanvas(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+ 
+const pts = Array.from({length:55}, ()=>({
+  x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+  r:Math.random()*1.8+0.4,
+  dx:(Math.random()-0.5)*0.28, dy:(Math.random()-0.5)*0.28,
+  a:Math.random()*0.45+0.1
+}));
+(function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach(p=>{
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(232,83,122,${p.a})`; ctx.fill();
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+  });
+  requestAnimationFrame(loop);
+})();
+ 
+/* HEARTS */
+setInterval(()=>{
+  const em=['❤️','💕','💗','💖','🌹','✨'];
+  const h=document.createElement('div');
+  h.className='heart';
+  h.textContent=em[Math.floor(Math.random()*em.length)];
+  h.style.left=Math.random()*100+'vw';
+  const dur=Math.random()*4+3;
+  h.style.animationDuration=dur+'s';
+  h.style.fontSize=(Math.random()*13+11)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(), dur*1000+300);
+},550);
+ 
+/* SHOW SCREEN */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+ 
+/* PASSWORD SHOW/HIDE */
+let pwVisible=false;
+function togglePw(){
+  pwVisible=!pwVisible;
+  document.getElementById('password').type = pwVisible?'text':'password';
+  document.getElementById('eyeBtn').textContent = pwVisible?'🙈':'👁️';
+}
+ 
+/* CHECK PASSWORD */
+function checkPassword(){
+  const v=document.getElementById('password').value.toLowerCase().trim();
+  if(v==='i love you mera aadmi 1'){
+    document.getElementById('music').play().catch(()=>{});
+    showScreen('intro');
+  } else {
+    const err=document.getElementById('error');
+    err.textContent='Wrong code 😢 Try again!';
+    document.getElementById('password').style.borderColor='#ff4466';
+    setTimeout(()=>{ err.textContent=''; document.getElementById('password').style.borderColor=''; },2200);
+  }
+}
+ 
+/* BACK from user select */
+function goBackFromUserSelect(){
+  if(mainActive && fromMain) showScreen('main');
+  else showScreen('lockScreen');
+}
+ 
+/* CHAT FROM LOCK */
+function openChatFromLock(){
+  fromMain=false;
+  showScreen('userSelectScreen');
+}
+ 
+/* SELECT USER */
+function selectUser(user){
+  currentUser=user;
+  openChat();
+}
+ 
+/* START MAIN */
+function startMain(){
+  mainActive=true;
+  showScreen('main');
+  document.getElementById('chatFab').style.display='flex';
+  setTimeout(()=>{
+    revealVisible();
+    document.getElementById('main').addEventListener('scroll', revealVisible);
+  },150);
+}
+ 
+function revealVisible(){
+  const els=document.querySelectorAll('#main .letter-para, #main .sign-off');
+  els.forEach((el,i)=>{
+    const r=el.getBoundingClientRect();
+    if(r.top < window.innerHeight-50){
+      setTimeout(()=>el.classList.add('vis'), i*110);
+    }
+  });
+}
+ 
+/* CHAT FROM MAIN */
+function openChatMain(){
+  fromMain=true;
+  if(!currentUser) showScreen('userSelectScreen');
+  else openChat();
+}
+ 
+/* OPEN CHAT */
+function openChat(){
+  if(currentUser==='nikita'){
+    document.getElementById('chatAvatar').textContent='👩';
+    document.getElementById('chatTitle').textContent='Mukesh ke liye ❤️';
+  } else {
+    document.getElementById('chatAvatar').textContent='👨';
+    document.getElementById('chatTitle').textContent='Nikita ke liye ❤️';
+  }
+  renderMessages();
+  showScreen('chatScreen');
+}
+ 
+/* CLOSE CHAT */
+function closeChat(){
+  if(mainActive && fromMain) showScreen('main');
+  else showScreen('lockScreen');
+}
+ 
+/* RENDER MESSAGES */
+function renderMessages(){
+  const box=document.getElementById('chatMessages');
+  box.innerHTML='<div class="date-label">Today 💕</div>';
+  messages.forEach(m=>{
+    const wrap=document.createElement('div');
+    wrap.className='msg '+(m.from===currentUser?'sent':'received');
+    const lbl=document.createElement('div');
+    lbl.className='msg-label';
+    lbl.textContent=m.from==='nikita'?'👩 Nikita':'👨 Mukesh';
+    wrap.appendChild(lbl);
+    const txt=document.createElement('span');
+    txt.textContent=m.text;
+    wrap.appendChild(txt);
+    box.appendChild(wrap);
+  });
+  setTimeout(()=>{ box.scrollTop=box.scrollHeight; },60);
+}
+ 
+/* SEND MESSAGE */
+function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text||!currentUser) return;
+  messages.push({from:currentUser,text,time:Date.now()});
+  try{ localStorage.setItem('nk_msgs',JSON.stringify(messages)); }catch(e){}
+  input.value='';
+  renderMessages();
+}
+</script>
+</body>
+</html>
