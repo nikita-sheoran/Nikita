@@ -15,12 +15,12 @@ body {
     text-align: center;
     overflow-y: auto;
 
-    /* 🔥 BACKGROUND IMAGE */
+    /* 🔥 Background Image */
     background: url('file_00000000d1dc720886a68383aa6016ef.png') no-repeat center center fixed;
     background-size: cover;
 }
 
-/* 🌑 Dark overlay for readability */
+/* 🌑 Dark overlay */
 body::before {
     content: "";
     position: fixed;
@@ -81,7 +81,6 @@ body::before {
     box-shadow: 0 0 30px pink;
     animation: zoom 3s infinite alternate;
 }
-
 @keyframes zoom {
     from { transform: scale(1); }
     to { transform: scale(1.1); }
@@ -102,6 +101,10 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
+h2 {
+    color: pink;
+}
+
 p {
     font-size: 18px;
     line-height: 1.7;
@@ -111,6 +114,7 @@ p {
 .proposal {
     font-size: 24px;
     color: yellow;
+    text-shadow: 0 0 15px gold;
 }
 
 /* Buttons */
@@ -120,8 +124,8 @@ p {
     border-radius: 25px;
     border: none;
     font-size: 18px;
+    cursor: pointer;
 }
-
 .yes { background: green; color:white; }
 .no { background: red; color:white; position:absolute; }
 
@@ -131,7 +135,6 @@ p {
     top:-10px;
     animation: fall linear infinite;
 }
-
 @keyframes fall {
     to { transform: translateY(100vh); }
 }
@@ -146,6 +149,7 @@ p {
     background:pink;
     padding:30px;
     border-radius:20px;
+    font-size:22px;
 }
 
 /* Cursor */
@@ -162,9 +166,9 @@ p {
 <!-- 🔐 Lock -->
 <div id="lockScreen">
     <h2>Enter Secret Code ❤️</h2>
-    <input type="text" id="password">
+    <input type="text" id="password" placeholder="Type here...">
     <button onclick="checkPassword()">Unlock 💖</button>
-    <p id="error"></p>
+    <p id="error" style="color:red;"></p>
 </div>
 
 <!-- 🎬 Intro -->
@@ -189,15 +193,21 @@ p {
 <div id="afterText" style="display:none;">
 
 <p class="proposal">
-Nikita, kya tum meri wife banogi? 💍
+Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi? 💍 <br>
+Kya tum meri wife banogi?
 </p>
 
 <button class="btn yes" onclick="yes()">YES ❤️</button>
 <button class="btn no" id="noBtn">NO 😢</button>
 
+<p>I love you more than words can ever explain ❤️</p>
+
+<h3>Hamesha tumhara,<br>Mukesh</h3>
+
 </div>
 </div>
 
+<!-- Popup -->
 <div id="popup">💍 She said YES ❤️</div>
 
 <script>
@@ -208,7 +218,7 @@ function checkPassword(){
   document.getElementById("lockScreen").style.display="none";
   document.getElementById("intro").style.display="flex";
  } else {
-  document.getElementById("error").innerText="Wrong code";
+  document.getElementById("error").innerText="Wrong code 😢";
  }
 }
 
@@ -220,12 +230,24 @@ function start(){
  typeWriter();
 }
 
-// ✍️ Text
+// ✍️ FULL LETTER
 let text = `My Dear Nikita,
 
 Happy Birthday meri jaan 🎂❤️
 
-Aaj ka din mere liye bahut khaas hai... (same letter continue kar sakta hai tu yaha)`;
+Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
+
+Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
+
+Nikita, hamara rishta shayad shabdon me samjhana mushkil hai, lekin mere dil me tumhari jagah bilkul ek wife jaisi hi hai. Tum mere liye sirf ek saathi nahi ho, balki meri aadat ho, meri khushi ho aur meri poori duniya ho. Main jab bhi apna future sochta hoon to usme har jagah sirf tum hi nazar aati ho.
+
+Main tumhare saath har khushi baantna chahta hoon, har mushkil me tumhara haath pakad kar chalna chahta hoon. Main chahta hoon ki jab zindagi me koi accha pal aaye to sabse pehle tumhare saath share karu, aur jab koi mushkil aaye to hum dono milkar uska saamna karein.
+
+Aaj tumhare birthday ke is khoobsurat din par main tumse dil ki ek baat kehna chahta hoon. Yeh sirf ek sawal nahi hai, balki meri poori zindagi ka sapna hai.
+
+Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, tumhara saath kabhi nahi chhodunga. Zindagi me chahe kitni bhi mushkilein aaye, main hamesha tumhare saath khada rahunga. Main tumhe hamesha khush rakhne ki puri koshish karunga, kyunki tumhari khushi hi meri sabse badi khushi hai.
+
+Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho jitni tum meri zindagi me special ho.`;
 
 let i = 0;
 function typeWriter(){
@@ -235,6 +257,7 @@ function typeWriter(){
   setTimeout(typeWriter, 25);
  } else {
   document.getElementById("afterText").style.display="block";
+  document.getElementById("text").classList.remove("cursor");
  }
 }
 
