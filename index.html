@@ -4,654 +4,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Nikita ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
- 
-:root {
-  --rose: #e8537a;
-  --deep: #c0395a;
-  --blush: #ffd6e0;
-  --gold: #f9c74f;
-  --dark: #0d0608;
-  --glass: rgba(255,255,255,0.07);
-  --glass-border: rgba(255,255,255,0.15);
-}
- 
 html { scroll-behavior: smooth; }
- 
+
 body {
-  font-family: 'Lato', sans-serif;
-  color: white;
-  background: var(--dark);
-  height: 100vh;
-  overflow: hidden;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+    overflow-y: auto;
+
+    background: url('file_00000000d1dc720886a68383aa6016ef.png') no-repeat center center fixed;
+    background-size: cover;
 }
- 
-#canvas {
-  position: fixed; inset: 0;
-  z-index: 0; pointer-events: none;
+
+/* Dark overlay */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
- 
+
+/* Lock */
+#lockScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+}
+
+#lockScreen input {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    width: 250px;
+    text-align: center;
+}
+
+#lockScreen button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: pink;
+}
+
+/* Intro */
+#intro {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.photo {
+    width: 230px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px pink;
+}
+
+/* Main */
+#main {
+    display: none;
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 40px;
+    background: linear-gradient(45deg, red, yellow, cyan);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    color: pink;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.7;
+    text-shadow: 0 0 10px pink;
+}
+
+/* Typing cursor */
+.cursor {
+    border-right: 2px solid white;
+    animation: blink 1s infinite;
+}
+@keyframes blink { 50% { border-color: transparent; } }
+
+/* Floating hearts */
 .heart {
-  position: fixed; top: -30px;
-  animation: fall linear forwards;
-  pointer-events: none; z-index: 1; opacity: 0.75;
+    position: fixed;
+    top:-10px;
+    animation: fall linear infinite;
 }
 @keyframes fall {
-  0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-  100% { transform: translateY(110vh) rotate(25deg); opacity: 0; }
+    to { transform: translateY(100vh); }
 }
- 
-/* ─── SCREENS ─── */
-.screen {
-  position: fixed; inset: 0;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  z-index: 5;
-  transition: opacity 0.5s ease, visibility 0.5s;
-}
-.screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
- 
-/* ─── LOCK ─── */
-#lockScreen {
-  background: radial-gradient(ellipse at 50% 30%, #3a0a1a 0%, #0d0608 70%);
-}
-.lock-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(20px);
-  border-radius: 30px;
-  padding: 44px 36px;
-  width: min(400px, 92vw);
-  box-shadow: 0 0 80px rgba(232,83,122,0.2);
-  display: flex; flex-direction: column;
-  align-items: center; gap: 18px;
-  position: relative; z-index: 2;
-}
-.lock-icon { font-size: 52px; animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
- 
-.lock-card h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px; color: var(--blush);
-  text-align: center; line-height: 1.4;
-}
- 
-.pw-wrap { position: relative; width: 100%; }
-.pw-wrap input {
-  width: 100%; padding: 14px 50px 14px 20px;
-  font-size: 16px; border-radius: 50px;
-  border: 2px solid rgba(232,83,122,0.4);
-  background: rgba(255,255,255,0.08);
-  color: white; text-align: center;
-  outline: none; transition: border 0.3s;
-  font-family: 'Lato', sans-serif;
-}
-.pw-wrap input::placeholder { color: rgba(255,255,255,0.4); }
-.pw-wrap input:focus { border-color: var(--rose); }
- 
-.eye-btn {
-  position: absolute; right: 14px; top: 50%;
-  transform: translateY(-50%);
-  background: none; border: none;
-  cursor: pointer; font-size: 20px;
-  color: rgba(255,255,255,0.5);
-  transition: color 0.2s; line-height: 1; padding: 0;
-}
-.eye-btn:hover { color: var(--rose); }
- 
-.btn {
-  padding: 13px 28px; border-radius: 50px; border: none;
-  cursor: pointer; font-size: 16px;
-  font-family: 'Lato', sans-serif; font-weight: 600;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.btn:hover  { transform: scale(1.05); }
-.btn:active { transform: scale(0.97); }
-.btn-primary {
-  background: linear-gradient(135deg, var(--rose), var(--deep));
-  color: white; width: 100%;
-  box-shadow: 0 4px 20px rgba(232,83,122,0.4);
-}
-.btn-secondary {
-  background: transparent;
-  border: 1.5px solid var(--rose);
-  color: var(--blush);
-}
-.btn-ghost {
-  background: transparent;
-  border: 1.5px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.55);
-  font-size: 14px; padding: 10px 22px;
-}
-.btn-ghost:hover { border-color: var(--rose); color: var(--blush); }
- 
-#error { color: #ff6b8a; font-size: 14px; min-height: 18px; text-align:center; }
- 
- 
-/* ─── INTRO ─── */
-#intro {
-  background: radial-gradient(ellipse at 50% 30%, #2a0a14 0%, #0d0608 70%);
-}
-.intro-card {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 24px; z-index: 2;
-}
-.photo-frame { position: relative; }
-.photo-frame::before {
-  content: ''; position: absolute; inset: -8px;
-  border-radius: 28px;
-  background: linear-gradient(45deg, var(--rose), var(--gold), var(--rose));
-  animation: huerot 3s linear infinite; z-index: -1;
-}
-@keyframes huerot { 100%{ filter: hue-rotate(360deg); } }
-.photo {
-  width: min(200px, 55vw); border-radius: 20px;
-  display: block; border: 4px solid var(--dark);
-}
-.intro-card h2 {
-  font-family: 'Playfair Display', serif; font-size: 24px;
-  color: var(--blush);
-  text-shadow: 0 0 30px rgba(232,83,122,0.8);
-  text-align: center;
-}
- 
-/* ─── MAIN ─── */
-#main {
-  background: radial-gradient(ellipse at 50% 0%, #2a0614 0%, #0d0608 60%);
-  overflow-y: auto;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.main-inner {
-  max-width: 700px; width: 100%;
-  margin: 0 auto;
-  padding: 56px 18px 130px;
-  position: relative; z-index: 2;
-}
-.hero-header { text-align: center; margin-bottom: 48px; }
-.hero-header::after {
-  content: ''; display: block; width: 80px; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--rose), transparent);
-  margin: 20px auto 0;
-}
-.main-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(34px, 8vw, 62px);
-  background: linear-gradient(135deg, #ffb3c6, var(--gold), #ff6b9d);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; line-height: 1.15;
-  filter: drop-shadow(0 0 28px rgba(232,83,122,0.4));
-}
-.main-subtitle {
-  font-family: 'Playfair Display', serif; font-style: italic;
-  font-size: 17px; color: var(--blush); opacity: 0.8; margin-top: 8px;
-}
- 
-.letter-para {
-  position: relative;
-  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(16px); border-radius: 20px;
-  padding: 26px 30px; margin-bottom: 16px;
-  font-size: 16.5px; line-height: 2;
-  color: rgba(255,255,255,0.91);
-  box-shadow: 0 4px 28px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07);
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-  overflow: hidden;
-}
-.letter-para.vis { opacity: 1; transform: translateY(0); }
-.letter-para::before {
-  content: ''; position: absolute;
-  left: 0; top: 20%; bottom: 20%; width: 3px; border-radius: 2px;
-  background: linear-gradient(to bottom, transparent, var(--rose), transparent);
-}
-.letter-para.highlight {
-  background: linear-gradient(135deg, rgba(232,83,122,0.14), rgba(192,57,90,0.07));
-  border-color: rgba(232,83,122,0.28);
-  box-shadow: 0 4px 36px rgba(232,83,122,0.14), inset 0 1px 0 rgba(232,83,122,0.18);
-}
-.letter-para.has-quote::after {
-  content: '"'; position: absolute; top: -12px; right: 18px;
-  font-family: 'Playfair Display', serif; font-size: 96px; line-height: 1;
-  color: rgba(232,83,122,0.07); pointer-events: none;
-}
-.para-num {
-  display: inline-block; font-size: 11px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--rose); opacity: 0.75;
-  margin-bottom: 10px; font-family: 'Lato', sans-serif;
-}
- 
-.sign-off {
-  position: relative; margin-top: 8px;
-  padding: 38px 32px; border-radius: 24px;
-  text-align: center; overflow: hidden;
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
-  background: linear-gradient(135deg, rgba(232,83,122,0.17), rgba(249,199,79,0.07));
-  border: 1px solid rgba(232,83,122,0.28);
-  box-shadow: 0 0 56px rgba(232,83,122,0.12);
-}
-.sign-off.vis { opacity: 1; transform: translateY(0); }
-.sign-off-glow {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(232,83,122,0.14) 0%, transparent 70%);
-  pointer-events: none;
-}
-.ring-emoji {
-  font-size: 38px; display: block; margin-bottom: 14px;
-  animation: ringPulse 2.2s ease-in-out infinite;
-}
-@keyframes ringPulse {
-  0%,100%{transform:scale(1) rotate(-5deg)} 50%{transform:scale(1.18) rotate(5deg)}
-}
-.propose-line {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(19px, 4vw, 26px);
-  color: var(--gold); font-style: italic;
-  margin-bottom: 28px; line-height: 1.5;
-  animation: goldGlow 3s ease-in-out infinite;
-}
-@keyframes goldGlow {
-  0%,100%{text-shadow:0 0 20px rgba(249,199,79,0.4),0 0 40px rgba(249,199,79,0.2)}
-  50%{text-shadow:0 0 40px rgba(249,199,79,0.8),0 0 80px rgba(249,199,79,0.4)}
-}
-.love-line { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 24px; line-height: 1.9; }
-.signature { font-family: 'Playfair Display', serif; font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
-.signature-name {
-  font-family: 'Playfair Display', serif; font-style: italic; font-size: 30px;
-  background: linear-gradient(135deg, var(--rose), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  filter: drop-shadow(0 0 18px rgba(232,83,122,0.5));
-}
-/* Date header */
-.letter-date {
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: rgba(255,255,255,0.35); margin-bottom: 10px;
-  font-family: 'Lato', sans-serif;
-}
- 
-/* Memory cards - slightly different style */
-.memory-card {
-  border-left: none;
-}
-.memory-card::before {
-  background: linear-gradient(to bottom, transparent, #c8a96e, transparent);
-}
-.memory-card .para-num {
-  color: #c8a96e; font-size: 10px;
-}
- 
-/* Letter divider */
-.letter-divider {
-  text-align: center; font-style: italic;
-  color: rgba(255,255,255,0.4); font-size: 14px;
-  margin: 6px 0 18px; line-height: 1.7;
-  font-family: 'Playfair Display', serif;
-}
- 
-/* Shayari box */
-  .shayari-box {
-  background: linear-gradient(135deg, rgba(200,169,110,0.12), rgba(249,199,79,0.05));
-  border: 1px solid rgba(200,169,110,0.25);
-  border-radius: 20px; padding: 28px 32px;
-  margin-bottom: 16px; text-align: center;
-  font-family: 'Playfair Display', serif;
-  font-style: italic; font-size: 16px;
-  line-height: 1.9; color: rgba(255,255,255,0.85);
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.shayari-box.vis { opacity: 1; transform: translateY(0); }
-.shayari-sign {
-  margin-top: 14px; font-size: 18px;
-  color: var(--gold); font-style: italic;
-}
-.highlight-poem {
-  background: linear-gradient(135deg, rgba(232,83,122,0.1), rgba(200,169,110,0.08));
-  border-color: rgba(232,83,122,0.2);
-}
- 
-/* Propose sub text */
-.propose-sub {
-  font-size: 14px; color: rgba(255,255,255,0.6);
-  line-height: 1.8; margin-bottom: 28px;
-  font-style: italic;
-}
- 
-/* Wada list */
-.wada-list {
-  text-align: left; margin: 20px 0;
-}
-.wada-item {
-  padding: 10px 14px; margin-bottom: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px; border-left: 3px solid var(--rose);
-  font-size: 15px; line-height: 1.6;
-  color: rgba(255,255,255,0.85);
-}
- 
- 
+</style>
 </head>
+
 <body>
- 
-<canvas id="canvas"></canvas>
- 
-<!-- LOCK -->
-<div class="screen" id="lockScreen">
-  <div class="lock-card">
-    <div class="lock-icon">🔐</div>
+
+<!-- 🔐 Lock -->
+<div id="lockScreen">
     <h2>Enter Secret Code ❤️</h2>
-    <div class="pw-wrap">
-      <input type="password" id="password" placeholder="Type secret code..."
-             onkeydown="if(event.key==='Enter') checkPassword()">
-      <button class="eye-btn" id="eyeBtn" onclick="togglePw()" type="button">👁️</button>
-    </div>
-    <button class="btn btn-primary" onclick="checkPassword()">Unlock 💖</button>
-    <p id="error"></p>
-  </div>
+    <input type="text" id="password" placeholder="Type here...">
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="error" style="color:red;"></p>
 </div>
- 
-<!-- INTRO -->
-<div class="screen hidden" id="intro">
-  <div class="intro-card">
-    <div class="photo-frame">
-      <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo"
-           onerror="this.style.display='none'">
-    </div>
+
+<!-- Intro -->
+<div id="intro">
+    <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo">
     <h2>💖 Special Surprise For You 💖</h2>
-    <button class="btn btn-primary" onclick="startMain()" style="width:210px;">
-      Start ❤️
-    </button>
-  </div>
+    <button onclick="start()">Start ❤️</button>
 </div>
- 
-<!-- MAIN LETTER -->
-<div class="screen hidden" id="main">
-  <div class="main-inner">
- 
-    <div class="hero-header">
-      <div class="letter-date">Mukesh → 13 April 2026 | Birthday Letter</div>
-      <h1 class="main-title">Meri Pyaari Nikita,</h1>
-      <p class="main-subtitle">— Happy Birthday meri jaan 🎂❤️ —</p>
-    </div>
- 
-    <!-- Opening -->
-    <div class="letter-para has-quote">
-      <div class="para-num">✦ &nbsp;Dil Ki Baat</div>
-      Nikita — aaj teri 18vi birthday tak paana nahi kabhi socha tha. Itni baatein hain, itne lamhe hain, aur woh sab tujhi ki wajah se dil mein mohabbat aur warmth wardhi hai. Itne dino baad, tujhe finally bata raha hoon, kyunki aaj tumhare saath rahike hum jeena jaante hain, aur aaj dil hai tumhare saame rakhne ka hai.
-    </div>
- 
-    <div class="letter-para">
-      <div class="para-num">✦ &nbsp;Pehle Kuch Pal</div>
-      Pehle mujhe yeh chela nahi tha. Na koi raga tha, na koi chain. Lekin hum ek baar mili — woh baatein, gaane. Tumhari jo mehkaan meri zindagi rahi hai. Tumhari awaaz mere sukoon hai, toh bhi jha tha hoon, pareshan hota hoon — bas tumhare ko yaad kar hi khushi hota hoon aur chain tha theek hone ka aisa.
-    </div>
- 
-    <p class="letter-divider">· · ·<br><em>Yeh lamhe jo dil ke andar band hain...</em></p>
- 
-    <!-- Memory entries -->
-    <div class="letter-para memory-card">
-      <div class="para-num">3 MAY 2023 — YE EK SHURUAAT</div>
-      Achanak woh roz aana hua tha. Tum gaate thi, dil mein — aawaz sirf tumhari — naadan si mohabbat ki shuruaat meri thi. Hum zyaada baate nahi karte the aur tujhse ek roz zyaada kehna chahte tha, lekin mujhe nahi tha. Tab bhi nahi kehte the. Tab bhi nahi bol pata tha.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">8 MAY 2023 — PEHLA EHSAAS</div>
-      Usase hua tha jab meri zindagi me aayi thi. Tum mera dil dono ka hissa thi — aur dil kahin se mila nahi. "Tujhe kasam jaan se rehna." ❤️
-    </div>
- 
-    <div class="letter-para memory-card highlight">
-      <div class="para-num">JANUARY MEIN — YOH TERI AANKHON WALA SAPNA</div>
-      Jaane waqt tha, tum poorhi. Hamse chahe nahi tha. Tumhare haath ki lakeein haath ke likhte waqt meri kalam se talao pata tha. Main chain tha — "Kitni dil bohot hai." "Haansi" geh gaaya wo... "Woh bhi khaamoshi" "Kitni bhool hoon tum — jo tumko tere saath hoon." Woh bhi Mukesh... Main itna zyaada andar main — jo aaj tumse tere andar pe aakar main.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">27 MAY 2023 — EK ROOHANI PAL</div>
-      Jaane kareep rone chahta tha. Tum mujhse sang hote nahi thi. Dabb ki peela kehti... "Main hoon mat kaaro, mujhse hoon boy aa hoon." ❤️ Aur humko — jab tumhare haath ki meri haath mein thi. Rone aaya tha. Rone aaya tha. Lekin bhi — meri ek baar jab tumhe jo is duniya mein humane se meri hasna ki wajah thi.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">10 SEPTEMBER 2023 — ROZE KA DIN</div>
-      Jaamse pahli baar kaho — "Main is taja kya aankhon hoon. Jaise to yaqin chahta hoon." Gar dono ye dono ko lo poori mere liye. Woh pehla bol hain — "Kab hum kisi bhi waqt ke sabse Manzoorni wali thi."
-    </div>
- 
-    <div class="letter-para memory-card highlight">
-      <div class="para-num">11 OCTOBER 2023 — PHIR WALA DIN</div>
-      Humane sabse meri roohani silayi. Mujhe tumhare yaha filing ke baad — woh islat woh andar tumharo mein dil tumhari nahi. "Woh madhumane" — aur yahi koi taana ho tumhare saath hoon. Woh mahaabat — aur ghar log tale bhi hai.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">4 OCTOBER 2023 — LARA TERI BAAT</div>
-      Aur us roz hum aakhri baar mila. Woh silaa se main sadhne mein dekha. Yahan baaki din mein theek — mera yeh baar ho kyun — mera mujhse main se zindagi hu. Dar yeni woh chi di dost dil machhinda Dil. Jaan yahi bhi har.
-    </div>
- 
-    <p class="letter-divider">· · ·<br><em>Woh waqt... Iss dono ne nikha diya...</em></p>
- 
-    <!-- Deep feelings -->
-    <div class="letter-para memory-card highlight">
-      <div class="para-num">12 OCTOBER 2023 — PHIR YEH DIN</div>
-      Phir ek din aaya, Tumne kaha — "Woh khaamush karti hai." "Woh teri aage... fajhe annaas dawa thi." Ek yaqin thi ki ya zyaada nehi. Main chalaa. Woh bhi — aur Nikita... ek sar jo tumharo andar me uski aage, kuchhi nahi milega.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">4 OCTOBER 2023 — AAJA AAGYA</div>
-      Jaane z bajte tak kuch hua. Tumharo se umeed. Dil mein bikhar dusaan tha. Lekin yeh woh bhi nahi. Hum — yeh meri wali nahi — woh inse ki jaan ho tumhe nahi. Ek ke saath nahi — ek inse thodi parabto to bhi... Zindagi yeh pe parh. Tumharo yeh baki.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">4 OCTOBER 2023 — LALA YATAD</div>
-      Phir us roh humane de manaye aaya. Woh dillse se ki main aur andbhere mein dil ke shhoti nirvalam ko lambi thi. Yahan baad din mein theek — mera yeh baar ho kyun — mera mujhse main mein zindagi hi bhi Hain. Dar koi woh chi di dost dil machindha Dil. Jaan yahi bhi hai.
-    </div>
- 
-    <p class="letter-divider">· · ·<br><em>Nahi... Tu saagi thodi fakir thi aansuaon,<br>par tumse mera dil mein apni raad lagaad dona ki.</em></p>
- 
-    <!-- Shayari block -->
-    <div class="shayari-box">
-      <p>Mohabbat mein dil ki jaisi se naahi ikra,<br>
-      haar toh hai hai karepad se bhaabi ko yado.</p>
-      <br>
-      <p>Khushi ne haadse bihange thi duniya meri,<br>
-      mera dakh neho tho — woh roj maadubu.</p>
-      <br>
-      <p>Dil kaata toh sil nek loo —</p>
-      <p><em>"Yeh safar hamesha ke liye hona chahta hoon.<br>
-      Thaahero saathi, thi ho meri jaan, Akhiyaan hai."</em></p>
-      <p class="shayari-sign">Mukesh</p>
-    </div>
- 
-    <!-- More memories -->
-    <div class="letter-para memory-card highlight">
-      <div class="para-num">11 NOVEMBER 2023 — BAAD KA SAFAR</div>
-      Phir pehle, khud pages ne ands maand tha. Tum dikh thi. Hum un Khota khyaon gaaye. Phir ki ke logo panna maand mein dono — woh mein manana woh dooo — saamne woh.
-    </div>
- 
-    <div class="letter-para memory-card">
-      <div class="para-num">12 NOVEMBER 2023 — CHAIN KI RAAT</div>
-      Chher imaqan the neho the merin mains. Kitikia ke parso khudn the har karo. Maana ye daftan nahi thi — mach baai ak baima nahi thi. Woh bhi peranon the. Woh bhi peranon the. Har se meine peranons nahi — peranons inse ki jaan hokar tumhe bhi nahi. Fajhe saath nahi — yeh inse thodi, paradiso bhi ko. Zindagi yeh pe parh.
-    </div>
- 
-    <p class="letter-divider">· · ·<br><em>Aur phir — 4 March 2026...</em></p>
- 
-    <!-- Final big section -->
-    <div class="letter-para highlight has-quote">
-      <div class="para-num">4 MARCH 2026 — SABSE ZYAADA KHAAS</div>
-      Phir ek dafa humara dono se main main the — tumharo se baatcheet — haath sakar aakhri main thi... Khuda ke kadam mein pe mein dono re maang ji hone ke hain, chammo the aur anmumo tum — hamesha yaad humko tumhare dono pa zyaada hamse waqt ana zyaada pe. Yahan waqt mein tujhe tumharo Fertam dena chaahiye — ki tab bi dhaktam tujhse main nahi, mashaaye jaan.
-    </div>
- 
-    <!-- Final poem box -->
-    <div class="shayari-box highlight-poem">
-      <p>Tu hamesha toh kya kya hai — woh jaanbe, woh khushiyan, woh taklif,<br>
-      woh se waqt aur. Tumse na adhe — yeh sab seedha ek poori kahani thi hai. Aur us kahani ki ek hi raaj me bata hoon hums — hum dono ka hamesha ke liye ek hi saath hona.</p>
-      <br>
-      <p>Tu aati hai toh — woh jab meri roohana wajah hoon — woh aur tumhare liye hoon hamesha.</p>
-    </div>
- 
-    <!-- Closing para -->
-    <div class="letter-para">
-      <div class="para-num">✦ &nbsp;Aaj Ka Din</div>
-      Nikita, jo hum dono ne saath jeya hai — woh jaanbe, woh khushiyan, woh taklif, woh se waqt aur. Tumse na adhe — yeh sab seedha ek poori kahani thi hai. Aur us kahani ki ek hi maqam bonate thi — hum dono ka hamesha ke liye ek hi saath hona.
-    </div>
- 
-    <div class="letter-para">
-      <div class="para-num">✦ &nbsp;Mera Izhaar</div>
-      Tu mera woh insaan nahi hai — tum meri naahi hai, tum meri naahi hai. Tum meri aadat hai, tumse aarzoo hai. Zindagi jab bhi tumne meri wajah se hoon, rooh ke jagah ko dil tumharo nahi. Aur main chahta hoon — yeh hamesha aisi hi rahe.
-    </div>
- 
-    <!-- PROPOSAL SIGN-OFF -->
-    <div class="sign-off">
-      <div class="sign-off-glow"></div>
-      <span class="ring-emoji">💍</span>
-      <p class="propose-line">"Nikita — Bittu — Nikku — meri jaan,<br>
-      Kya tum hamesha ke liye meri banogi?<br>
-      Kya tum meri wife banogi?"</p>
- 
-      <div class="propose-sub">
-        <p>Yeh sirf ek aansuon nahi,<br>
-        yeh ek sab andheron ki ki faaron ki raah hai.<br>
-        Ki hamesha saath jeena hain.</p>
-        <br>
-        <p>Yeh meri dil se tumse waada hai,<br>
-        jo tumharo ko parh ke dil se chahata dil —<br>
-        aur dildaro ke liye zindagi ke hain.</p>
-      </div>
- 
-      <div class="wada-list">
-        <p style="color:var(--blush); font-style:italic; margin-bottom:14px;">Humara dono hoon:</p>
-        <div class="wada-item">❤️ Tumhari khushi ka saathi — har pal, har jagah, har buri mein.</div>
-        <div class="wada-item">❤️ Zindagi mein chahe kitni bhi mushkilein aaye — tumhara haath kabhi nahi chhodunga.</div>
-        <div class="wada-item">❤️ Jab bhi tum khush dikhti, woh pehle tumhare saath share karta.</div>
-        <div class="wada-item">❤️ Hum meri dil mein tumhare saaya hamesha, kisi cheez mein dhaan hamaanga.</div>
-        <div class="wada-item">❤️ Tumhari khushi cheez nahi launga — chaliye ki aaye woh dil dil hai.</div>
-        <div class="wada-item">❤️ Woh humse nahi ki behna — hamesha tumhare paas pahle milenge. Har waqt. Hamesha.</div>
-      </div>
- 
-      <p class="love-line" style="margin-top:28px;">
-        Aaj tumhare is pyaare janmadin pe — yeh dil ki poori baat tumhare saame hai.<br>
-        Koi abhimaani rahi, koi nihna nahin, lekin ek dil ki ek dil ka aawaz — aur ek ummeed ki<br>
-        tum "haan" kahein.
-      </p>
- 
-      <p class="love-line">
-        Kyaa hum meri zindagi maanas waqeed hoon — woh ek maqased woh din tumhare liye hoon hamesha.
-      </p>
- 
-      <p class="love-line">Happy Birthday once again, meri Jaan. ❤️</p>
- 
-      <p style="font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:6px;">
-        I love you more than words can ever explain.<br>
-        Hamesha, sirf tumhara, sirf tumhara.<br>
-        <em>Tumhara woh Bando — jo hamesha tumhaari zaat mein tumse milega.</em>
-      </p>
- 
-      <p class="signature-name">Mukesh 🌹</p>
-    </div>
- 
-  </div>
-</div>
- 
+
+<!-- Music -->
 <audio id="music" loop>
-  <source src="Trim_AUD-20260318-WA0000_1.m4a">
+<source src="Trim_AUD-20260318-WA0000_1.m4a">
 </audio>
- 
+
+<!-- Main -->
+<div id="main">
+<h1>My Dear Nikita ❤️</h1>
+<h2>Happy Birthday meri jaan 🎂❤️</h2>
+
+<p id="text" class="cursor"></p>
+
+<p style="margin-top:20px;">
+I love you more than words can ever explain ❤️<br><br>
+Hamesha tumhara,<br>
+Mukesh
+</p>
+
+</div>
+
 <script>
-/* STATE */
-let mainActive = false;
- 
-/* CANVAS */
-const canvas = document.getElementById('canvas');
-const ctx    = canvas.getContext('2d');
-function resizeCanvas(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
- 
-const pts = Array.from({length:55}, ()=>({
-  x:Math.random()*innerWidth, y:Math.random()*innerHeight,
-  r:Math.random()*1.8+0.4,
-  dx:(Math.random()-0.5)*0.28, dy:(Math.random()-0.5)*0.28,
-  a:Math.random()*0.45+0.1
-}));
-(function loop(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  pts.forEach(p=>{
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(232,83,122,${p.a})`; ctx.fill();
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width) p.dx*=-1;
-    if(p.y<0||p.y>canvas.height) p.dy*=-1;
-  });
-  requestAnimationFrame(loop);
-})();
- 
-/* HEARTS */
-setInterval(()=>{
-  const em=['❤️','💕','💗','💖','🌹','✨'];
-  const h=document.createElement('div');
-  h.className='heart';
-  h.textContent=em[Math.floor(Math.random()*em.length)];
-  h.style.left=Math.random()*100+'vw';
-  const dur=Math.random()*4+3;
-  h.style.animationDuration=dur+'s';
-  h.style.fontSize=(Math.random()*13+11)+'px';
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(), dur*1000+300);
-},550);
- 
-/* SHOW SCREEN */
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
- 
-/* PASSWORD SHOW/HIDE */
-let pwVisible=false;
-function togglePw(){
-  pwVisible=!pwVisible;
-  document.getElementById('password').type = pwVisible?'text':'password';
-  document.getElementById('eyeBtn').textContent = pwVisible?'🙈':'👁️';
-}
- 
-/* CHECK PASSWORD */
+// Password + music start
 function checkPassword(){
-  const v=document.getElementById('password').value.toLowerCase().trim();
-  if(v==='i love you mera aadmi 1'){
-    document.getElementById('music').play().catch(()=>{});
-    showScreen('intro');
-  } else {
-    const err=document.getElementById('error');
-    err.textContent='Wrong code 😢 Try again!';
-    document.getElementById('password').style.borderColor='#ff4466';
-    setTimeout(()=>{ err.textContent=''; document.getElementById('password').style.borderColor=''; },2200);
-  }
+ let v=document.getElementById("password").value.toLowerCase().trim();
+ if(v==="i love you mera aadmi 1"){
+  document.getElementById("music").play().catch(()=>{});
+  document.getElementById("lockScreen").style.display="none";
+  document.getElementById("intro").style.display="flex";
+ } else {
+  document.getElementById("error").innerText="Wrong code 😢";
+ }
 }
- 
-/* START MAIN */
-function startMain(){
-  mainActive=true;
-  showScreen('main');
-  setTimeout(()=>{
-    revealVisible();
-    document.getElementById('main').addEventListener('scroll', revealVisible);
-  },150);
+
+// Start
+function start(){
+ document.getElementById("intro").style.display="none";
+ document.getElementById("main").style.display="block";
+ typeWriter();
 }
- 
-function revealVisible(){
-  const els=document.querySelectorAll('#main .letter-para, #main .sign-off, #main .shayari-box');
-  els.forEach((el,i)=>{
-    const r=el.getBoundingClientRect();
-    if(r.top < window.innerHeight-50){
-      setTimeout(()=>el.classList.add('vis'), i*100);
-    }
-  });
+
+// Full letter
+let text = `
+Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
+
+Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
+
+Nikita, hamara rishta shayad shabdon me samjhana mushkil hai, lekin mere dil me tumhari jagah bilkul ek wife jaisi hi hai. Tum mere liye sirf ek saathi nahi ho, balki meri aadat ho, meri khushi ho aur meri poori duniya ho. Main jab bhi apna future sochta hoon to usme har jagah sirf tum hi nazar aati ho.
+
+Main tumhare saath har khushi baantna chahta hoon, har mushkil me tumhara haath pakad kar chalna chahta hoon. Main chahta hoon ki jab zindagi me koi accha pal aaye to sabse pehle tumhare saath share karu, aur jab koi mushkil aaye to hum dono milkar uska saamna karein.
+
+Aaj tumhare birthday ke is khoobsurat din par main tumse dil ki ek baat kehna chahta hoon. Yeh sirf ek sawal nahi hai, balki meri poori zindagi ka sapna hai.
+
+Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi?
+Kya tum meri wife banogi? 💍
+
+Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, tumhara saath kabhi nahi chhodunga. Zindagi me chahe kitni bhi mushkilein aaye, main hamesha tumhare saath khada rahunga. Main tumhe hamesha khush rakhne ki puri koshish karunga, kyunki tumhari khushi hi meri sabse badi khushi hai.
+
+Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho jitni tum meri zindagi me special ho.
+
+I love you more than words can ever explain. ❤️
+
+Hamesha tumhara,
+Mukesh`;
+
+let i = 0;
+function typeWriter(){
+ if(i < text.length){
+  document.getElementById("text").innerHTML += text.charAt(i);
+  i++;
+  setTimeout(typeWriter, 25);
+ } else {
+  document.getElementById("text").classList.remove("cursor");
+ }
 }
- 
-}
+
+// Hearts
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.innerHTML="❤️";
+ h.className="heart";
+ h.style.left=Math.random()*100+"vw";
+ h.style.animationDuration=(Math.random()*3+2)+"s";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),5000);
+},300);
 </script>
+
 </body>
 </html>
