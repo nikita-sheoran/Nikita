@@ -4,840 +4,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Nikita ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-:root {
-  --rose:    #d4547a;
-  --deep:    #8c1a3a;
-  --blush:   #f7d6e0;
-  --gold:    #c9954c;
-  --gold2:   #e8bf7a;
-  --cream:   #fdf6f0;
-  --dark:    #07030a;
-  --ink:     #1a0a14;
-  --glass:   rgba(255,255,255,0.05);
-  --gb:      rgba(255,255,255,0.1);
-}
- 
 html { scroll-behavior: smooth; }
- 
+
 body {
-  font-family: 'Raleway', sans-serif;
-  color: white;
-  background: var(--dark);
-  height: 100vh;
-  overflow: hidden;
-  cursor: default;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+    overflow-y: auto;
+
+    background: url('file_00000000d1dc720886a68383aa6016ef.png') no-repeat center center fixed;
+    background-size: cover;
 }
- 
-/* ── GRAIN OVERLAY ── */
-body::after {
-  content: '';
-  position: fixed; inset: 0; z-index: 100;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.35;
+
+/* Dark overlay */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
- 
-/* ── CANVAS ── */
-#canvas {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-}
- 
-/* ── HEARTS ── */
-.heart {
-  position: fixed; top: -30px;
-  animation: hfall linear forwards;
-  pointer-events: none; z-index: 2;
-}
-@keyframes hfall {
-  0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
-  100% { transform: translateY(110vh) rotate(20deg) scale(0.6); opacity: 0; }
-}
- 
-/* ══════════════════════════════
-   SCREENS
-══════════════════════════════ */
-.screen {
-  position: fixed; inset: 0;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  z-index: 10;
-  transition: opacity 0.7s ease, visibility 0.7s;
-}
-.screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
- 
-/* ══════════════════════════════
-   LOCK SCREEN
-══════════════════════════════ */
+
+/* Lock */
 #lockScreen {
-  background: radial-gradient(ellipse at 40% 35%, #2a0618 0%, #07030a 65%);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
 }
- 
-/* Decorative orbs */
-#lockScreen::before,
-#lockScreen::after {
-  content: '';
-  position: absolute; border-radius: 50%;
-  filter: blur(80px); pointer-events: none;
+
+#lockScreen input {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    width: 250px;
+    text-align: center;
 }
-#lockScreen::before {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(212,84,122,0.18), transparent 70%);
-  top: -100px; left: -100px;
+
+#lockScreen button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: pink;
 }
-#lockScreen::after {
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(201,149,76,0.12), transparent 70%);
-  bottom: -80px; right: -80px;
-}
- 
-.lock-card {
-  position: relative; z-index: 2;
-  width: min(420px, 92vw);
-  padding: 52px 40px;
-  border-radius: 2px;
-  border: 1px solid rgba(212,84,122,0.2);
-  background: rgba(10,3,12,0.7);
-  backdrop-filter: blur(30px);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04),
-    0 30px 80px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-  display: flex; flex-direction: column;
-  align-items: center; gap: 20px;
-  overflow: hidden;
-}
- 
-/* top shimmer line */
-.lock-card::before {
-  content: '';
-  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,84,122,0.6), rgba(201,149,76,0.4), transparent);
-}
- 
-.lock-rose {
-  font-size: 44px;
-  animation: roseFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px rgba(212,84,122,0.5));
-}
-@keyframes roseFloat {
-  0%,100%{ transform: translateY(0) rotate(-5deg); }
-  50%{ transform: translateY(-8px) rotate(5deg); }
-}
- 
-.lock-card h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px; font-weight: 300; letter-spacing: 2px;
-  color: var(--blush); text-align: center; line-height: 1.4;
-}
- 
-.pw-wrap { position: relative; width: 100%; }
-.pw-wrap input {
-  width: 100%; padding: 15px 52px 15px 22px;
-  font-size: 15px; letter-spacing: 3px;
-  border-radius: 1px;
-  border: 1px solid rgba(212,84,122,0.3);
-  background: rgba(255,255,255,0.04);
-  color: white; text-align: center;
-  outline: none; transition: border 0.3s, box-shadow 0.3s;
-  font-family: 'Raleway', sans-serif;
-}
-.pw-wrap input::placeholder { color: rgba(255,255,255,0.25); letter-spacing: 1px; font-size:13px; }
-.pw-wrap input:focus {
-  border-color: rgba(212,84,122,0.7);
-  box-shadow: 0 0 0 3px rgba(212,84,122,0.08), 0 0 20px rgba(212,84,122,0.1);
-}
-.eye-btn {
-  position: absolute; right: 15px; top: 50%;
-  transform: translateY(-50%);
-  background: none; border: none;
-  cursor: pointer; font-size: 18px;
-  color: rgba(255,255,255,0.3);
-  transition: color 0.2s; line-height: 1; padding: 0;
-}
-.eye-btn:hover { color: var(--rose); }
- 
-.unlock-btn {
-  width: 100%; padding: 15px;
-  background: linear-gradient(135deg, var(--rose) 0%, var(--deep) 100%);
-  border: none; border-radius: 1px; cursor: pointer;
-  font-family: 'Raleway', sans-serif; font-size: 13px;
-  font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
-  color: white; transition: all 0.3s;
-  box-shadow: 0 4px 30px rgba(212,84,122,0.3);
-  position: relative; overflow: hidden;
-}
-.unlock-btn::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.unlock-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 40px rgba(212,84,122,0.45); }
-.unlock-btn:hover::after { opacity: 1; }
-.unlock-btn:active { transform: translateY(0); }
- 
-#error { color: #e07090; font-size: 13px; min-height: 16px; letter-spacing: 1px; }
- 
-/* ══════════════════════════════
-   INTRO SCREEN
-══════════════════════════════ */
+
+/* Intro */
 #intro {
-  background: radial-gradient(ellipse at 50% 40%, #200812 0%, #07030a 70%);
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
-.intro-card {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 28px; z-index: 2;
-}
-.photo-frame {
-  position: relative;
-  padding: 3px;
-  background: linear-gradient(135deg, var(--rose), var(--gold), var(--deep), var(--gold2));
-  border-radius: 4px;
-  animation: borderGlow 4s linear infinite;
-}
-@keyframes borderGlow {
-  0%,100%{ box-shadow: 0 0 30px rgba(212,84,122,0.3); }
-  50%{ box-shadow: 0 0 60px rgba(212,84,122,0.6), 0 0 100px rgba(201,149,76,0.2); }
-}
+
 .photo {
-  width: min(210px, 58vw); border-radius: 2px;
-  display: block;
-  filter: brightness(0.95) contrast(1.05);
+    width: 230px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px pink;
 }
-.intro-card h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px; font-weight: 300;
-  color: var(--blush); letter-spacing: 2px;
-  text-shadow: 0 0 40px rgba(212,84,122,0.6);
-  text-align: center; font-style: italic;
-}
-.start-btn {
-  padding: 15px 44px;
-  background: transparent;
-  border: 1px solid rgba(212,84,122,0.5);
-  border-radius: 1px; cursor: pointer;
-  font-family: 'Raleway', sans-serif; font-size: 12px;
-  font-weight: 500; letter-spacing: 5px; text-transform: uppercase;
-  color: var(--blush); transition: all 0.4s;
-  position: relative; overflow: hidden;
-}
-.start-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(212,84,122,0.15), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.start-btn:hover {
-  border-color: var(--rose);
-  color: white;
-  box-shadow: 0 0 30px rgba(212,84,122,0.2);
-}
-.start-btn:hover::before { opacity: 1; }
- 
-/* ══════════════════════════════
-   MAIN LETTER SCREEN
-══════════════════════════════ */
+
+/* Main */
 #main {
-  background: var(--ink);
-  overflow-y: auto; align-items: flex-start; justify-content: flex-start;
-  /* Subtle texture */
-  background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(212,84,122,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(201,149,76,0.05) 0%, transparent 50%);
+    display: none;
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
 }
- 
-/* Custom scrollbar */
-#main::-webkit-scrollbar { width: 3px; }
-#main::-webkit-scrollbar-track { background: transparent; }
-#main::-webkit-scrollbar-thumb { background: rgba(212,84,122,0.3); border-radius: 2px; }
- 
-.main-inner {
-  max-width: 720px; width: 100%;
-  margin: 0 auto;
-  padding: 70px 24px 140px;
-  position: relative; z-index: 2;
+
+h1 {
+    font-size: 40px;
+    background: linear-gradient(45deg, red, yellow, cyan);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
- 
-/* ── HEADER ── */
-.hero-header {
-  text-align: center;
-  margin-bottom: 64px;
-  position: relative;
+
+h2 {
+    color: pink;
 }
- 
-/* Decorative corner lines */
-.hero-header::before {
-  content: '';
-  position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, transparent, rgba(212,84,122,0.4));
+
+p {
+    font-size: 18px;
+    line-height: 1.7;
+    text-shadow: 0 0 10px pink;
 }
- 
-.main-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(38px, 9vw, 72px);
-  font-weight: 300; font-style: italic;
-  letter-spacing: -1px; line-height: 1.1;
-  background: linear-gradient(135deg, #f0a0b8 0%, var(--gold2) 45%, #e87090 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 4px 30px rgba(212,84,122,0.35));
-  margin-bottom: 12px;
+
+/* Typing cursor */
+.cursor {
+    border-right: 2px solid white;
+    animation: blink 1s infinite;
 }
-.main-subtitle {
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: 18px; font-weight: 300;
-  color: rgba(247,214,224,0.7);
-  letter-spacing: 3px;
+@keyframes blink { 50% { border-color: transparent; } }
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    top:-10px;
+    animation: fall linear infinite;
 }
- 
-/* Bottom ornament */
-.header-ornament {
-  display: flex; align-items: center; justify-content: center;
-  gap: 16px; margin-top: 28px;
-}
-.header-ornament::before,
-.header-ornament::after {
-  content: '';
-  flex: 1; max-width: 120px; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,84,122,0.4));
-}
-.header-ornament::after {
-  background: linear-gradient(90deg, rgba(212,84,122,0.4), transparent);
-}
-.ornament-diamond {
-  width: 6px; height: 6px; background: var(--rose);
-  transform: rotate(45deg);
-  box-shadow: 0 0 12px rgba(212,84,122,0.6);
-}
- 
-/* ── LETTER PARAGRAPHS ── */
-.lp {
-  position: relative;
-  padding: 28px 32px 28px 36px;
-  margin-bottom: 16px;
-  font-size: 16.5px; line-height: 2;
-  color: rgba(255,255,255,0.88);
-  font-weight: 300;
-  border-left: 1px solid rgba(212,84,122,0.2);
-  background: linear-gradient(to right, rgba(212,84,122,0.04), transparent 60%);
-  opacity: 0; transform: translateX(-16px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.lp.vis { opacity: 1; transform: translateX(0); }
- 
-/* Rose glow dot on left */
-.lp::before {
-  content: '';
-  position: absolute; left: -3px; top: 32px;
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--rose);
-  box-shadow: 0 0 10px rgba(212,84,122,0.8);
-}
- 
-.lp.hl {
-  border-left-color: rgba(201,149,76,0.4);
-  background: linear-gradient(to right, rgba(201,149,76,0.06), transparent 60%);
-}
-.lp.hl::before { background: var(--gold); box-shadow: 0 0 10px rgba(201,149,76,0.8); }
- 
-.lp.gold-card {
-  border-left-color: rgba(201,149,76,0.25);
-  background: linear-gradient(to right, rgba(201,149,76,0.04), transparent 50%);
-}
-.lp.gold-card::before { background: var(--gold2); box-shadow: 0 0 8px rgba(232,191,122,0.7); }
- 
-/* Date / section label */
-.mem-date {
-  display: block; font-size: 10px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold2); margin-bottom: 10px;
-  font-family: 'Raleway', sans-serif; font-weight: 400;
-  opacity: 0.8;
-}
-.sec-label {
-  display: block; font-size: 10px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--rose); margin-bottom: 10px;
-  font-family: 'Raleway', sans-serif; font-weight: 400;
-}
- 
-/* ── DIVIDERS ── */
-.divider {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 10px;
-  margin: 28px 0 24px;
-  opacity: 0; transition: opacity 0.8s;
-}
-.divider.vis { opacity: 1; }
-.divider-line {
-  display: flex; align-items: center; gap: 12px; width: 100%; max-width: 320px;
-}
-.divider-line::before,
-.divider-line::after {
-  content: ''; flex: 1; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,84,122,0.35), transparent);
-}
-.divider-dots { display: flex; gap: 8px; }
-.divider-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-  background: rgba(212,84,122,0.5);
-}
-.divider-dot:nth-child(2){ background: rgba(201,149,76,0.6); transform: scale(1.3); }
-.divider-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 14px; font-weight: 300;
-  color: rgba(247,214,224,0.45); letter-spacing: 1px;
-  text-align: center;
-}
- 
-/* ── POEM BOX ── */
-.poem {
-  position: relative;
-    margin: 6px 0 16px;
-  padding: 32px 36px;
-  text-align: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 17px; font-weight: 300;
-  line-height: 2; color: rgba(255,255,255,0.85);
-  border: 1px solid rgba(201,149,76,0.2);
-  background: linear-gradient(135deg, rgba(201,149,76,0.06), rgba(212,84,122,0.03));
-  overflow: hidden;
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.poem.vis { opacity: 1; transform: translateY(0); }
- 
-/* Corner ornaments */
-.poem::before, .poem::after {
-  content: '✦';
-  position: absolute; font-style: normal;
-  font-family: 'Raleway'; font-size: 10px;
-  color: rgba(201,149,76,0.4);
-}
-.poem::before { top: 10px; left: 14px; }
-.poem::after  { bottom: 10px; right: 14px; }
- 
-.poem-sign {
-  display: block; margin-top: 16px;
-  font-size: 19px; color: var(--gold2);
-  letter-spacing: 1px;
-}
- 
-/* ── SIGN-OFF / PROPOSAL ── */
-.sign-off {
-  position: relative; margin-top: 16px;
-  padding: 44px 36px; overflow: hidden;
-  border: 1px solid rgba(212,84,122,0.22);
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(212,84,122,0.12) 0%, transparent 60%),
-    linear-gradient(160deg, rgba(10,2,14,0.9), rgba(20,5,18,0.95));
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.03),
-    0 40px 80px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(212,84,122,0.15);
-  text-align: center;
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-.sign-off.vis { opacity: 1; transform: translateY(0); }
- 
-/* Top shimmer */
-.sign-off::before {
-  content: '';
-  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,84,122,0.5), rgba(201,149,76,0.3), transparent);
-}
- 
-.ring-wrap {
-  display: inline-block; margin-bottom: 20px;
-  animation: ringFloat 2.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px rgba(201,149,76,0.5));
-}
-@keyframes ringFloat {
-  0%,100%{ transform: translateY(0) rotate(-8deg) scale(1); }
-  50%{ transform: translateY(-10px) rotate(8deg) scale(1.1); }
-}
-.ring-emoji { font-size: 42px; display: block; }
- 
-.propose-line {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(20px, 4.5vw, 30px);
-  font-weight: 400; font-style: italic;
-  color: var(--gold2); line-height: 1.65;
-  margin-bottom: 24px;
-  animation: goldPulse 3.5s ease-in-out infinite;
-}
-@keyframes goldPulse {
-  0%,100%{
-    text-shadow: 0 0 20px rgba(232,191,122,0.3);
-    color: #e8bf7a;
-  }
-  50%{
-    text-shadow: 0 0 40px rgba(232,191,122,0.7), 0 0 80px rgba(212,84,122,0.2);
-    color: #f5d48e;
-  }
-}
- 
-.propose-sub {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 16px; font-weight: 300;
-  color: rgba(255,255,255,0.55);
-  line-height: 2; margin-bottom: 28px;
-}
- 
-/* Waada list */
-.wada-head {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 18px;
-  color: var(--blush); margin-bottom: 16px;
-  display: block; letter-spacing: 1px;
-}
-.wada-list { text-align: left; margin-bottom: 30px; }
-.wada-item {
-  display: flex; gap: 12px; align-items: flex-start;
-  padding: 12px 16px; margin-bottom: 8px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  font-size: 15px; line-height: 1.65;
-  color: rgba(255,255,255,0.82);
-  font-weight: 300;
-  transition: background 0.3s, border 0.3s;
-}
-.wada-item:hover {
-  background: rgba(212,84,122,0.06);
-  border-color: rgba(212,84,122,0.2);
-}
-.wada-icon { color: var(--rose); flex-shrink: 0; margin-top: 2px; }
- 
-.love-line {
-  font-size: 15px; color: rgba(255,255,255,0.6);
-  margin-bottom: 14px; line-height: 2; font-weight: 300;
-}
- 
-.sig-italic {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 15px;
-  color: rgba(255,255,255,0.4); margin-bottom: 4px;
-  display: block; letter-spacing: 1px;
-}
- 
-.sig-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic; font-size: 38px; font-weight: 400;
-  background: linear-gradient(135deg, var(--rose), var(--gold2), var(--rose));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 24px rgba(212,84,122,0.5));
-  display: block; margin-top: 8px;
-  background-size: 200% 200%;
-  animation: sigShimmer 4s ease-in-out infinite;
-}
-@keyframes sigShimmer {
-  0%{ background-position: 0% 50%; }
-  50%{ background-position: 100% 50%; }
-  100%{ background-position: 0% 50%; }
+@keyframes fall {
+    to { transform: translateY(100vh); }
 }
 </style>
 </head>
+
 <body>
-<canvas id="canvas"></canvas>
- 
-<!-- ══ LOCK ══ -->
-<div class="screen" id="lockScreen">
-  <div class="lock-card">
-    <div class="lock-rose">🌹</div>
-    <h2>Enter Secret Code</h2>
-    <div class="pw-wrap">
-      <input type="password" id="password" placeholder="type here..."
-             onkeydown="if(event.key==='Enter') checkPassword()">
-      <button class="eye-btn" id="eyeBtn" onclick="togglePw()" type="button">👁️</button>
-    </div>
-    <button class="unlock-btn" onclick="checkPassword()">Unlock ❤️</button>
-    <p id="error"></p>
-  </div>
+
+<!-- 🔐 Lock -->
+<div id="lockScreen">
+    <h2>Enter Secret Code ❤️</h2>
+    <input type="text" id="password" placeholder="Type here...">
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="error" style="color:red;"></p>
 </div>
- 
-<!-- ══ INTRO ══ -->
-<div class="screen hidden" id="intro">
-  <div class="intro-card">
-    <div class="photo-frame">
-      <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo"
-           onerror="this.style.display='none'">
-    </div>
-    <h2>A Special Surprise For You 💖</h2>
-    <button class="start-btn" onclick="startMain()">Open Letter ❤️</button>
-  </div>
+
+<!-- Intro -->
+<div id="intro">
+    <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo">
+    <h2>💖 Special Surprise For You 💖</h2>
+    <button onclick="start()">Start ❤️</button>
 </div>
- 
-<!-- ══ MAIN LETTER ══ -->
-<div class="screen hidden" id="main">
-  <div class="main-inner">
- 
-    <!-- HEADER -->
-    <div class="hero-header">
-      <h1 class="main-title">Meri Pyaari Nikita,</h1>
-      <p class="main-subtitle">— Happy Birthday meri jaan 🎂❤️ —</p>
-      <div class="header-ornament"><div class="ornament-diamond"></div></div>
-    </div>
- 
-    <!-- OPENING -->
-    <div class="lp">
-      Nikita... yeh khat likhne baitha hoon toh pata nahi kahan se shuru karoon. Itni baatein hain, itne lamhe hain, itni yaadon ka bojh hai is dil par — ke ek khat mein sab samaana mushkil hai. Phir bhi koshish kar raha hoon, kyunki aaj tumhara janamdin hai, aur aaj dil ki har baat tumhare saamne rakhni hai.
-    </div>
- 
-    <div class="lp">
-      Pehle zindagi bas chal rahi thi. Na koi rang tha, na koi dhun. Lekin jab se tum aayi — sab badal gaya. Tumhari muskaan meri subah hai. Tumhari awaaz mera sukoon hai. Jab bhi thakta hoon, pareshan hota hoon — bas tumhara khayaal hi kaafi hota hai sab kuch theek karne ke liye.
-    </div>
- 
-    <div class="divider">
-      <div class="divider-line"><div class="divider-dots"><div class="divider-dot"></div><div class="divider-dot"></div><div class="divider-dot"></div></div></div>
-      <div class="divider-text">Woh lamhe jo dil ki tizori mein band hain...</div>
-    </div>
- 
-    <!-- MEMORIES -->
-    <div class="lp gold-card">
-      <span class="mem-date">5 May 2025 — Pehli Mulaqat</span>
-      Sab kuch ek help se shuru hua tha. Tum pareshan thi, darri hui thi — maine sirf insaniyat mein haath badhaya tha. Par kya pata tha ki usi haath ne meri kismat pakad li thi. Tumne halki si muskuraai — aur bas, dil ne faisla kar liya. Yahi woh hai. Yahi meri zindagi hai.
-    </div>
- 
-    <div class="lp gold-card">
-      <span class="mem-date">6 May 2025 — Police Station</span>
-      Baatein kam thi us din. Par meri nigaahein sirf tumpar thi. Tum kuch bol rahi thi aur main sun raha tha — aur dil andar se keh raha tha, "inhe kabhi jaane mat dena."
-    </div>
- 
-    <div class="lp gold-card hl">
-      <span class="mem-date">Scooter Wala Woh Khamosh Lamha</span>
-      Main aage tha, tum peeche. Hawa chal rahi thi. Tumhara haath kabhi-kabhi meri kamar se takra jaata tha. Main chup tha — lekin dil kehta tha... "Kaash yeh raasta kabhi khatam hi na ho." Woh khamoshi bhi ek baat thi — jo sirf hum dono samjhe the.
-    </div>
- 
-    <div class="lp gold-card">
-      <span class="mem-date">31 May 2025 — Ek Hi Gadde Par</span>
-      Main laptop par coding kar raha tha, tum mujhe tang kar rahi thi. Kabhi haath pakad leti, kabhi kehti — "Itna kaam mat karo, main bore ho jaati hoon." Woh lamha — jab tumhara haath mere haath mein tha, bina zaroorat ke, bina kisi baat ke — woh isliye tha kyunki ab humari khamoshiyaan bhi baat karne lagi thi.
-    </div>
- 
-    <div class="lp gold-card hl">
-      <span class="mem-date">10 September 2025 — Woh Teen Lafz</span>
-      Tumne pehli baar kaha — "Main aapke liye serious hoon. Main aapke saath rehna chahti hoon." Uss din se duniya alag ho gayi mere liye. Woh teen lafz — woh meri poori zindagi ka sabse khoobsurat pal tha.
-    </div>
- 
-    <div class="lp gold-card">
-      <span class="mem-date">13 October 2025 — Tady Wala Din</span>
-      Tumhari sister mere saath aayi. Main tumhare liye tady lekar aaya — ek chhoti si koshish tumhare chehre par muskaan laane ki. Tumne muskuraai bhi thi. Woh muskaan — woh meri taqat thi us waqt.
-    </div>
- 
-    <div class="divider">
-      <div class="divider-line"><div class="divider-dots"><div class="divider-dot"></div><div class="divider-dot"></div><div class="divider-dot"></div></div></div>
-      <div class="divider-text">Woh raat... jo dono ne alag alag ji...</div>
-    </div>
- 
-    <div class="lp gold-card hl">
-      <span class="mem-date">15 October 2025 — Raat 7:16</span>
-      Hamari ladai hui. Tumne kaha — "Sab khatam kar do." Woh do lafz... jaise zameen kheench li gayi paon ke neeche. Main wahan khada tha — andar se bikhar ke. Par tumhara chehra aankhon se nahi gaya. Kabhi nahi gaya.
-    </div>
- 
-    <div class="lp gold-card">
-      <span class="mem-date">17 October 2025 — Raat 1 Baje</span>
-      Main 1 baje tak roya — tumhare samne. Dil mein lakhon baatein thi, lekin koi jawab nahi mila. Woh raat meri zindagi ki sabse mushkil raat thi. Main toota tha — poori tarah. Par ek cheez ne mujhe rok ke rakha — tumhari yaadon ka bojh jo dil par tha. Tum. Sirf tum.
-    </div>
- 
-    <div class="lp gold-card">
-      <span class="mem-date">19 October 2025 — Tera SMS</span>
-      Phir 19 ko tumhara ek message aaya. Woh chhota sa SMS us andhere mein ek chhoti si roshni ki tarah tha. Uske baad din nikalte rahe — main mar mar ke jeeta raha. Par teri woh ek baat dil mein zinda thi. Aur aaj bhi hai.
-    </div>
- 
-    <!-- POEM 1 -->
-    <div class="poem">
-      Niki... tu aayi thi ek fake ID mitvaane,<br>
-      par tune mere dil mein apni real jagah bana li.<br><br>
-      Mushkilon mein bhi teri yaad ne saath diya,<br>
-      toot ke bhi teri wajah se khud ko joda.<br>
-      Tu meri wajah ban gayi —<br>
-      jeene ki, sehne ki, roz uthne ki.
-      <span class="poem-sign">— Mukesh</span>
-    </div>
- 
-    <div class="lp gold-card">
-      <span class="mem-date">11 November 2025 — Khatu Shyam</span>
-      Teri sister, bhai, papa — sab saath the. Tum bhi thi. Hum sab Khatu Shyam gaye. Dhoka lagaayi humne saath mein — ek mannat, ek dua... shayad wahi dua aaj is khat ki surat mein saamne hai. Woh din itna khaas tha — kyunki tum thi, aur sab kuch normal lagne laga tha. Jaise zindagi wapas aa rahi ho.
-    </div>
- 
-    <div class="lp gold-card hl">
-      <span class="mem-date">12 November 2025 — Train Ki Khidki</span>
-      Ghar wapas aa rahe the train mein. Khidki ke paas khade the hum dono. Tumne jo diya woh kiss — woh bas ek kiss nahi tha. Woh ek promise tha — bina lafzon ka, bina irade ke, dil se dil tak. Tum pure din mere saath rahi. Aur main us din jaana ki main tumhare bina ek pal bhi nahi reh sakta.
-    </div>
- 
-    <div class="divider">
-      <div class="divider-line"><div class="divider-dots"><div class="divider-dot"></div><div class="divider-dot"></div><div class="divider-dot"></div></div></div>
-      <div class="divider-text">Aur phir — 4 March 2026...</div>
-    </div>
- 
-    <div class="lp hl">
-      <span class="sec-label">4 March 2026 — Loharu se Sadulpur</span>
-      Phir ek baar hum dono train mein the — Loharu se Sadulpur. Woh safar chhota tha, par dil ke liye woh poori ek zindagi jaisa tha. Khidki ke bahar bhaagti hui duniya thi — aur mere liye woh duniya sirf tum thi. Tumhare paas baithna, tumhara saath hona — woh ek pal mujhe baar baar yaad aayega. Uske baad main wapas Loharu chala gaya — lekin dil wahan ka wahan reh gaya, tumhare paas.
-    </div>
- 
-    <!-- POEM 2 -->
-    <div class="poem">
-      Loharu se Sadulpur tak ka woh chhota sa safar,<br>
-      khatam hua lekin dil mein abhi bhi chal raha hai.<br><br>
-      Khidki se baahir bhaagti thi duniya saari,<br>
-      main dekh raha tha — sirf tumhein.<br><br>
-      Ek baar aur dil ne kaha —<br>
-      <em>"Yeh safar hamesha ke liye karna chahta hoon.<br>
-      Tumhare saath. Ek hi raah par. Ek hi ghar tak."</em>
-      <span class="poem-sign">— Mukesh</span>
-    </div>
- 
-    <!-- CLOSING -->
-    <div class="lp">
-      Nikita, jo hum dono ne saath jeea hai — woh yaadein, woh khushiyaan, woh tadap, woh aansoo, woh train ke safar — yeh sab milke ek poori kahani banti hai. Aur is kahani ka ek hi anjaam hona chahiye — hum dono ka hamesha ke liye ek saath hona.
-    </div>
- 
-    <div class="lp">
-      Tum mere liye sirf ek insaan nahi ho — tum meri aadat ho, meri zaroorat ho, meri subah ho, meri raat ho. Jab bhi apna future sochta hoon, usme har jagah sirf tum hi nazar aati ho. Aur main chahta hoon — yeh hamesha aise hi rahe.
-    </div>
- 
-    <!-- PROPOSAL -->
-    <div class="sign-off">
-      <div class="ring-wrap"><span class="ring-emoji">💍</span></div>
- 
-      <p class="propose-line">
-        "Nikita — Bittu — Nikku — meri jaan,<br>
-        Kya tum hamesha ke liye meri banogi?<br>
-        Kya tum meri wife banogi?"
-      </p>
- 
-      <div class="propose-sub">
-        Yeh sirf ek sawaal nahi —<br>
-        yeh un sab lamhon ka jawab maangna hai<br>
-        jo humne saath jeea hain.<br><br>
-        Yeh wada hai uss insaan ka<br>
-        jo tumhare liye sab kuch luta chuka hai —<br>
-        aur dobara lutaane ke liye taiyaar hai.
-      </div>
- 
-      <span class="wada-head">Main wada karta hoon...</span>
-      <div class="wada-list">
-        <div class="wada-item"><span class="wada-icon">❤️</span> Tumhari izzat hamesha karunga — har pal, har jagah, har haal mein.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Zindagi mein chahe kitni bhi mushkilein aaye — tumhara haath kabhi nahi chhodunga.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Jab bhi koi khushi aaye, sabse pehle tumhare saath share karunga.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Har mushkil mein tumhara saaya banunga, teri dhoop mein chaon banunga.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Tumhe kabhi akela nahi hone dunga — chahe duniya saath chhod de.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Woh train ke safar ki tarah — hamesha tumhare paas baitha rahunga. Har safar mein.</div>
-      </div>
- 
-      <p class="love-line">
-        Aaj tumhare is pyaare janamdin par — yeh dil ki poori baat tumhare saamne hai.<br>
-        Koi chhupaai nahi, koi roka nahi. Sirf ek dil ka ek dil se sawal —<br>
-        aur ek umeed ki tum "haan" kaho.
-      </p>
-      <p class="love-line">Jitni tum meri zindagi mein special ho — utna hi special yeh din tumhare liye ho. Hamesha.</p>
-      <p class="love-line">Happy Birthday once again, meri jaan. ❤️</p>
-      <p class="love-line">
-        I love you more than words can ever explain.<br>
-        Hamesha. Sirf tum. Sirf tumhara.
-      </p>
- 
-      <span class="sig-italic">Tumhara woh banda — jo Loharu se bhi tumhare liye aata rahega,</span>
-      <span class="sig-name">Mukesh 🌹</span>
-    </div>
- 
-  </div>
-</div>
- 
+
+<!-- Music -->
 <audio id="music" loop>
-  <source src="Trim_AUD-20260318-WA0000_1.m4a">
+<source src="Trim_AUD-20260318-WA0000_1.m4a">
 </audio>
- 
+
+<!-- Main -->
+<div id="main">
+<h1>My Dear Nikita ❤️</h1>
+<h2>Happy Birthday meri jaan 🎂❤️</h2>
+
+<p id="text" class="cursor"></p>
+
+<p style="margin-top:20px;">
+I love you more than words can ever explain ❤️<br><br>
+Hamesha tumhara,<br>
+Mukesh
+</p>
+
+</div>
+
 <script>
-/* ── CANVAS PARTICLES ── */
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
-resize(); window.addEventListener('resize', resize);
- 
-const pts = Array.from({length:70}, ()=>({
-  x:Math.random()*innerWidth, y:Math.random()*innerHeight,
-  r:Math.random()*1.5+0.3,
-  dx:(Math.random()-0.5)*0.2, dy:(Math.random()-0.5)*0.2,
-  a:Math.random()*0.35+0.05,
-  c: Math.random()>0.6 ? '201,149,76' : '212,84,122'
-}));
-(function loop(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  pts.forEach(p=>{
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${p.c},${p.a})`; ctx.fill();
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width) p.dx*=-1;
-    if(p.y<0||p.y>canvas.height) p.dy*=-1;
-  });
-  requestAnimationFrame(loop);
-})();
- 
-/* ── FLOATING HEARTS ── */
-setInterval(()=>{
-  const em=['❤️','💕','🌹','✨','💗','🥀'];
-  const h=document.createElement('div');
-  h.className='heart';
-  h.textContent=em[Math.floor(Math.random()*em.length)];
-  h.style.left=Math.random()*100+'vw';
-  const dur=Math.random()*5+4;
-  h.style.animationDuration=dur+'s';
-  h.style.fontSize=(Math.random()*12+10)+'px';
-  h.style.opacity='0.6';
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(), dur*1000+200);
-},700);
- 
-/* ── SCREENS ── */
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
- 
-/* ── PASSWORD ── */
-let pwVisible=false;
-function togglePw(){
-  pwVisible=!pwVisible;
-  document.getElementById('password').type=pwVisible?'text':'password';
-  document.getElementById('eyeBtn').textContent=pwVisible?'🙈':'👁️';
-}
+// Password + music start
 function checkPassword(){
-  const v=document.getElementById('password').value.toLowerCase().trim();
-  if(v==='i love you mera aadmi 1'){
-    document.getElementById('music').play().catch(()=>{});
-    showScreen('intro');
-  } else {
-    const err=document.getElementById('error');
-    err.textContent='Wrong code 😢 Try again!';
-    document.getElementById('password').style.borderColor='rgba(212,84,122,0.8)';
-    setTimeout(()=>{ err.textContent=''; document.getElementById('password').style.borderColor=''; },2200);
-  }
+ let v=document.getElementById("password").value.toLowerCase().trim();
+ if(v==="i love you mera aadmi 1"){
+  document.getElementById("music").play().catch(()=>{});
+  document.getElementById("lockScreen").style.display="none";
+  document.getElementById("intro").style.display="flex";
+ } else {
+  document.getElementById("error").innerText="Wrong code 😢";
+ }
 }
- 
-/* ── START MAIN ── */
-function startMain(){
-  showScreen('main');
-  setTimeout(()=>{
-    revealAll();
-    document.getElementById('main').addEventListener('scroll', revealAll);
-  },200);
+
+// Start
+function start(){
+ document.getElementById("intro").style.display="none";
+ document.getElementById("main").style.display="block";
+ typeWriter();
 }
- 
-/* ── SCROLL REVEAL ── */
-function revealAll(){
-  document.querySelectorAll('#main .lp, #main .poem, #main .sign-off, #main .divider').forEach((el,i)=>{
-    if(el.getBoundingClientRect().top < window.innerHeight - 40){
-      setTimeout(()=>el.classList.add('vis'), i*60);
-    }
-  });
+
+// Full letter
+let text = `
+Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
+
+Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
+
+Nikita, hamara rishta shayad shabdon me samjhana mushkil hai, lekin mere dil me tumhari jagah bilkul ek wife jaisi hi hai. Tum mere liye sirf ek saathi nahi ho, balki meri aadat ho, meri khushi ho aur meri poori duniya ho. Main jab bhi apna future sochta hoon to usme har jagah sirf tum hi nazar aati ho.
+
+Main tumhare saath har khushi baantna chahta hoon, har mushkil me tumhara haath pakad kar chalna chahta hoon. Main chahta hoon ki jab zindagi me koi accha pal aaye to sabse pehle tumhare saath share karu, aur jab koi mushkil aaye to hum dono milkar uska saamna karein.
+
+Aaj tumhare birthday ke is khoobsurat din par main tumse dil ki ek baat kehna chahta hoon. Yeh sirf ek sawal nahi hai, balki meri poori zindagi ka sapna hai.
+
+Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi?
+Kya tum meri wife banogi? 💍
+
+Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, tumhara saath kabhi nahi chhodunga. Zindagi me chahe kitni bhi mushkilein aaye, main hamesha tumhare saath khada rahunga. Main tumhe hamesha khush rakhne ki puri koshish karunga, kyunki tumhari khushi hi meri sabse badi khushi hai.
+
+Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho jitni tum meri zindagi me special ho.
+
+I love you more than words can ever explain. ❤️
+
+Hamesha tumhara,
+Mukesh`;
+
+let i = 0;
+function typeWriter(){
+ if(i < text.length){
+  document.getElementById("text").innerHTML += text.charAt(i);
+  i++;
+  setTimeout(typeWriter, 25);
+ } else {
+  document.getElementById("text").classList.remove("cursor");
+ }
 }
+
+// Hearts
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.innerHTML="❤️";
+ h.className="heart";
+ h.style.left=Math.random()*100+"vw";
+ h.style.animationDuration=(Math.random()*3+2)+"s";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),5000);
+},300);
 </script>
+
 </body>
 </html>
