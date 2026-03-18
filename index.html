@@ -6,9 +6,7 @@
 <title>For Nikita ❤️</title>
 
 <style>
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
@@ -16,7 +14,7 @@ body {
     background: black;
     color: white;
     text-align: center;
-    overflow-y: auto; /* ✅ scroll enabled */
+    overflow-y: auto;
 }
 
 /* 🔐 Lock Screen */
@@ -31,6 +29,7 @@ body {
     flex-direction: column;
     z-index: 10;
 }
+
 #lockScreen input {
     padding: 12px;
     font-size: 18px;
@@ -39,6 +38,7 @@ body {
     width: 250px;
     text-align: center;
 }
+
 #lockScreen button {
     margin-top: 15px;
     padding: 10px 20px;
@@ -54,7 +54,6 @@ body {
     height: 2px;
     background: white;
     animation: twinkle 2s infinite alternate;
-    z-index: 0;
 }
 @keyframes twinkle {
     from { opacity: 0.2; }
@@ -71,15 +70,18 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 9;
 }
-#intro button {
-    padding: 15px 30px;
-    font-size: 20px;
-    border-radius: 30px;
-    background: #ff4081;
-    border: none;
-    color: white;
+
+/* 🖼️ Photo */
+.photo {
+    width: 230px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px pink;
+    animation: zoom 3s infinite alternate;
+}
+@keyframes zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
 }
 
 /* Main */
@@ -88,7 +90,6 @@ body {
     padding: 20px;
     max-width: 700px;
     margin: auto;
-    z-index: 1;
 }
 
 h1 {
@@ -110,6 +111,7 @@ p {
     text-shadow: 0 0 15px gold;
 }
 
+/* Buttons */
 .btn {
     margin: 10px;
     padding: 12px 25px;
@@ -118,16 +120,14 @@ p {
     font-size: 18px;
     cursor: pointer;
 }
-
-.yes { background: green; color: white; }
-.no { background: red; color: white; position: absolute; }
+.yes { background: green; color:white; }
+.no { background: red; color:white; position:absolute; }
 
 /* ❤️ Hearts */
 .heart {
     position: fixed;
-    top: -10px;
+    top:-10px;
     animation: fall linear infinite;
-    z-index: 0;
 }
 @keyframes fall {
     to { transform: translateY(100vh); }
@@ -135,16 +135,15 @@ p {
 
 /* 💍 Popup */
 #popup {
-    display: none;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: pink;
-    padding: 30px;
-    border-radius: 20px;
-    font-size: 22px;
-    z-index: 20;
+    display:none;
+    position:fixed;
+    top:40%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:pink;
+    padding:30px;
+    border-radius:20px;
+    font-size:22px;
 }
 
 /* Cursor */
@@ -153,15 +152,18 @@ p {
     animation: blink 1s infinite;
 }
 @keyframes blink { 50% { border-color: transparent; } }
+
+/* Security */
+img { pointer-events:none; user-select:none; }
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
-<!-- 🔐 Lock Screen -->
+<!-- 🔐 Lock -->
 <div id="lockScreen">
     <h2>Enter Secret Code ❤️</h2>
-    <input type="text" id="password" placeholder="Type here..." />
+    <input type="text" id="password" placeholder="Type here...">
     <button onclick="checkPassword()">Unlock 💖</button>
     <p id="error" style="color:red;"></p>
 </div>
@@ -169,44 +171,48 @@ p {
 <!-- 🌌 Stars -->
 <script>
 for(let i=0;i<120;i++){
-    let star=document.createElement("div");
-    star.className="star";
-    star.style.left=Math.random()*100+"vw";
-    star.style.top=Math.random()*100+"vh";
-    document.body.appendChild(star);
+ let s=document.createElement("div");
+ s.className="star";
+ s.style.left=Math.random()*100+"vw";
+ s.style.top=Math.random()*100+"vh";
+ document.body.appendChild(s);
 }
 </script>
 
 <!-- 🎬 Intro -->
 <div id="intro">
+    <img src="your-photo.jpg" class="photo">
     <h2>💖 Special Surprise For You 💖</h2>
     <button onclick="start()">Start ❤️</button>
 </div>
 
 <!-- 🎵 Music -->
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
 </audio>
 
-<!-- Main Content -->
+<!-- Main -->
 <div id="main">
-    <h1>My Dear Nikita ❤️</h1>
-    <h2>Happy Birthday meri jaan 🎂❤️</h2>
+<h1>My Dear Nikita ❤️</h1>
+<h2>Happy Birthday meri jaan 🎂❤️</h2>
 
-    <p id="text" class="cursor"></p>
+<p id="text" class="cursor"></p>
 
-    <div id="afterText" style="display:none;">
-        <p class="proposal">
-        Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi? 💍 <br>
-        Kya tum meri wife banogi?
-        </p>
+<div id="afterText" style="display:none;">
 
-        <button class="btn yes" onclick="yes()">YES ❤️</button>
-        <button class="btn no" id="noBtn">NO 😢</button>
+<p class="proposal">
+Nikita, kya tum hamesha ke liye meri zindagi ka hissa banogi? 💍 <br>
+Kya tum meri wife banogi?
+</p>
 
-        <p>I love you more than words can ever explain ❤️</p>
-        <h3>Hamesha tumhara,<br>Mukesh</h3>
-    </div>
+<button class="btn yes" onclick="yes()">YES ❤️</button>
+<button class="btn no" id="noBtn">NO 😢</button>
+
+<p>I love you more than words can ever explain ❤️</p>
+
+<h3>Hamesha tumhara,<br>Mukesh</h3>
+
+</div>
 </div>
 
 <!-- Popup -->
@@ -215,24 +221,24 @@ for(let i=0;i<120;i++){
 <script>
 // 🔐 Password
 function checkPassword(){
-    let input = document.getElementById("password").value.toLowerCase().trim();
-    if(input === "i love you mera aadmi"){
-        document.getElementById("lockScreen").style.display="none";
-        document.getElementById("intro").style.display="flex";
-    } else {
-        document.getElementById("error").innerText = "Wrong code 😢";
-    }
+ let v=document.getElementById("password").value.toLowerCase().trim();
+ if(v==="i love you mera aadmi"){
+  document.getElementById("lockScreen").style.display="none";
+  document.getElementById("intro").style.display="flex";
+ } else {
+  document.getElementById("error").innerText="Wrong code 😢";
+ }
 }
 
 // 🎬 Start
 function start(){
-    document.getElementById("intro").style.display="none";
-    document.getElementById("main").style.display="block";
-    document.getElementById("music").play();
-    typeWriter();
+ document.getElementById("intro").style.display="none";
+ document.getElementById("main").style.display="block";
+ document.getElementById("music").play();
+ typeWriter();
 }
 
-// ✍️ FULL LETTER
+// ✍️ FULL LETTER (100% same)
 let text = `My Dear Nikita,
 
 Happy Birthday meri jaan 🎂❤️
@@ -253,37 +259,37 @@ Happy Birthday once again meri jaan. Aaj ka din tumhare liye utna hi special ho 
 
 let i = 0;
 function typeWriter(){
-    if(i < text.length){
-        document.getElementById("text").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 25);
-    } else {
-        document.getElementById("afterText").style.display="block";
-        document.getElementById("text").classList.remove("cursor");
-    }
+ if(i < text.length){
+  document.getElementById("text").innerHTML += text.charAt(i);
+  i++;
+  setTimeout(typeWriter, 25);
+ } else {
+  document.getElementById("afterText").style.display="block";
+  document.getElementById("text").classList.remove("cursor");
+ }
 }
 
 // ❤️ Hearts
 setInterval(()=>{
-    let h=document.createElement("div");
-    h.innerHTML="❤️";
-    h.className="heart";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(Math.random()*3+2)+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),5000);
+ let h=document.createElement("div");
+ h.innerHTML="❤️";
+ h.className="heart";
+ h.style.left=Math.random()*100+"vw";
+ h.style.animationDuration=(Math.random()*3+2)+"s";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),5000);
 },300);
 
 // 💍 YES
 function yes(){
-    document.getElementById("popup").style.display="block";
+ document.getElementById("popup").style.display="block";
 }
 
 // 😂 NO move
 let noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("mouseover",()=>{
-    noBtn.style.left=Math.random()*80+"vw";
-    noBtn.style.top=Math.random()*80+"vh";
+ noBtn.style.left=Math.random()*80+"vw";
+ noBtn.style.top=Math.random()*80+"vh";
 });
 </script>
 
