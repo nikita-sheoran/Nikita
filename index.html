@@ -281,46 +281,200 @@ body {
 }
 
 .main-inner {
-  max-width: 680px;
+  max-width: 700px;
   width: 100%;
   margin: auto;
-  padding: 60px 24px 100px;
+  padding: 60px 20px 120px;
   position: relative;
   z-index: 2;
 }
 
+/* ── Hero Header ── */
+.hero-header {
+  text-align: center;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.hero-header::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--rose), transparent);
+  margin: 24px auto 0;
+}
+
 .main-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 8vw, 60px);
-  background: linear-gradient(45deg, #ff8fa3, var(--gold), #ff6b9d);
+  font-size: clamp(38px, 9vw, 68px);
+  background: linear-gradient(135deg, #ffb3c6 0%, var(--gold) 45%, #ff6b9d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1.2;
-  margin-bottom: 8px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+  filter: drop-shadow(0 0 30px rgba(232,83,122,0.4));
 }
 
 .main-subtitle {
   color: var(--blush);
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  margin-bottom: 40px;
-  opacity: 0.85;
+  opacity: 0.8;
+  letter-spacing: 1px;
 }
 
-.letter-box {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(16px);
-  border-radius: 24px;
-  padding: 32px;
-  margin-bottom: 24px;
-  line-height: 1.9;
+/* ── Letter Paragraphs ── */
+.letter-para {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin-bottom: 18px;
   font-size: 17px;
+  line-height: 2;
   text-align: left;
-  box-shadow: 0 0 40px rgba(232,83,122,0.1);
-  white-space: pre-wrap;
+  color: rgba(255,255,255,0.92);
+  box-shadow:
+    0 4px 30px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  overflow: hidden;
+}
+
+.letter-para.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Left accent bar */
+.letter-para::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, transparent, var(--rose), transparent);
+}
+
+/* Quote icon */
+.letter-para.has-quote::after {
+  content: '"';
+  position: absolute;
+  top: -10px; right: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 100px;
+  line-height: 1;
+  color: rgba(232,83,122,0.08);
+  pointer-events: none;
+}
+
+/* Para number */
+.para-num {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rose);
+  opacity: 0.7;
+  margin-bottom: 10px;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ── Special highlight para ── */
+.letter-para.highlight {
+  background: linear-gradient(135deg, rgba(232,83,122,0.15), rgba(192,57,90,0.08));
+  border-color: rgba(232,83,122,0.3);
+  box-shadow:
+    0 4px 40px rgba(232,83,122,0.15),
+    inset 0 1px 0 rgba(232,83,122,0.2);
+}
+
+/* ── Sign-off / Proposal ── */
+.sign-off {
+  position: relative;
+  margin-top: 8px;
+  padding: 40px 36px;
+  border-radius: 24px;
+  text-align: center;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  background: linear-gradient(135deg, rgba(232,83,122,0.18), rgba(249,199,79,0.08));
+  border: 1px solid rgba(232,83,122,0.3);
+  box-shadow: 0 0 60px rgba(232,83,122,0.12);
+}
+.sign-off.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sign-off-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,83,122,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.love-line {
+  font-size: 17px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 28px;
+  line-height: 1.8;
+}
+
+.propose-line {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 4vw, 28px);
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(249,199,79,0.5), 0 0 60px rgba(249,199,79,0.3);
+  font-style: italic;
+  margin: 0 0 32px;
+  line-height: 1.5;
+  animation: goldGlow 3s ease-in-out infinite;
+}
+
+@keyframes goldGlow {
+  0%, 100% { text-shadow: 0 0 20px rgba(249,199,79,0.4), 0 0 40px rgba(249,199,79,0.2); }
+  50%       { text-shadow: 0 0 40px rgba(249,199,79,0.8), 0 0 80px rgba(249,199,79,0.4); }
+}
+
+.signature {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+
+.signature-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-style: italic;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(232,83,122,0.5));
+}
+
+/* Ring pulse */
+.ring-emoji {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 16px;
+  animation: ringPulse 2s ease-in-out infinite;
+}
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1) rotate(-5deg); }
+  50%       { transform: scale(1.2) rotate(5deg); }
 }
 
 .cursor {
@@ -328,27 +482,6 @@ body {
   animation: blink 1s infinite;
 }
 @keyframes blink { 50% { border-color: transparent; } }
-
-.sign-off {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(16px);
-  border-radius: 24px;
-  padding: 28px 32px;
-  font-size: 18px;
-  line-height: 1.8;
-  text-align: left;
-  color: var(--blush);
-}
-
-.propose-line {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  color: var(--gold);
-  text-shadow: 0 0 20px rgba(249,199,79,0.6);
-  font-style: italic;
-  margin-top: 16px;
-}
 
 /* ─── CHAT ─── */
 #chatScreen {
@@ -567,20 +700,49 @@ body {
 <!-- ─── MAIN SCREEN ─── -->
 <div class="screen hidden" id="main" style="overflow-y:auto; align-items:flex-start;">
   <div class="main-inner">
-    <h1 class="main-title">My Dear Nikita ❤️</h1>
-    <p class="main-subtitle">🎂 Happy Birthday Meri Jaan 🎂</p>
 
-    <div class="letter-box">
-      <p id="text" class="cursor"></p>
+    <div class="hero-header">
+      <h1 class="main-title">My Dear Nikita ❤️</h1>
+      <p class="main-subtitle">🎂 Happy Birthday Meri Jaan 🎂</p>
     </div>
 
-    <div class="sign-off">
-      I love you more than words can ever explain ❤️<br><br>
-      <div class="propose-line">💍 Kya tum hamesha ke liye meri zindagi ka hissa banogi?</div>
-      <br>
-      Hamesha tumhara,<br>
-      <strong style="font-family:'Playfair Display',serif; font-size:20px; color:var(--gold);">Mukesh</strong>
+    <div class="letter-para has-quote" id="p1">
+      <div class="para-num">✦ &nbsp; Ek Khaas Din</div>
+      Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
     </div>
+
+    <div class="letter-para" id="p2">
+      <div class="para-num">✦ &nbsp; Tumhari Muskaan</div>
+      Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab kuch theek lagne lagta hai. Tum meri zindagi ka woh hissa ban chuki ho jiske bina main apne kal ke baare me soch bhi nahi sakta.
+    </div>
+
+    <div class="letter-para highlight" id="p3">
+      <div class="para-num">✦ &nbsp; Mere Dil Ki Baat</div>
+      Nikita, hamara rishta shayad shabdon me samjhana mushkil hai, lekin mere dil me tumhari jagah bilkul ek wife jaisi hi hai. Tum mere liye sirf ek saathi nahi ho, balki meri aadat ho, meri khushi ho aur meri poori duniya ho. Main jab bhi apna future sochta hoon to usme har jagah sirf tum hi nazar aati ho.
+    </div>
+
+    <div class="letter-para" id="p4">
+      <div class="para-num">✦ &nbsp; Mera Wada</div>
+      Main tumhare saath har khushi baantna chahta hoon, har mushkil me tumhara haath pakad kar chalna chahta hoon. Main chahta hoon ki jab zindagi me koi accha pal aaye to sabse pehle tumhare saath share karu, aur jab koi mushkil aaye to hum dono milkar uska saamna karein.
+    </div>
+
+    <div class="letter-para highlight has-quote" id="p5">
+      <div class="para-num">✦ &nbsp; Birthday Ka Tohfa</div>
+      Aaj tumhare birthday ke is khoobsurat din par main tumse dil ki ek baat kehna chahta hoon. Yeh sirf ek sawal nahi hai, balki meri poori zindagi ka sapna hai. Main wada karta hoon ki main hamesha tumhari respect karunga, tumhe samjhunga, tumhara saath kabhi nahi chhodunga. Zindagi me chahe kitni bhi mushkilein aaye, main hamesha tumhare saath khada rahunga.
+    </div>
+
+    <div class="sign-off" id="signoff">
+      <div class="sign-off-glow"></div>
+      <span class="ring-emoji">💍</span>
+      <p class="propose-line">"Kya tum hamesha ke liye<br>meri zindagi ka hissa banogi?"</p>
+      <p class="love-line">
+        I love you more than words can ever explain ❤️<br>
+        Happy Birthday once again meri jaan 🎂
+      </p>
+      <p class="signature">Hamesha tumhara,</p>
+      <p class="signature-name">Mukesh</p>
+    </div>
+
   </div>
 </div>
 
@@ -620,182 +782,4 @@ let chatFromLock = false;
 let mainActive = false;
 let messages = JSON.parse(localStorage.getItem('nk_msgs') || '[]');
 
-/* ─── CANVAS PARTICLES ─── */
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = innerWidth; canvas.height = innerHeight;
-window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; });
-
-const particles = Array.from({length: 60}, () => ({
-  x: Math.random() * innerWidth,
-  y: Math.random() * innerHeight,
-  r: Math.random() * 2 + 0.5,
-  dx: (Math.random() - 0.5) * 0.3,
-  dy: (Math.random() - 0.5) * 0.3,
-  alpha: Math.random() * 0.5 + 0.1
-}));
-
-function drawParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(232, 83, 122, ${p.alpha})`;
-    ctx.fill();
-    p.x += p.dx; p.y += p.dy;
-    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-  });
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-/* ─── FLOATING HEARTS ─── */
-setInterval(() => {
-  const emojis = ['❤️','💕','💗','💖','🌹','✨'];
-  const h = document.createElement('div');
-  h.className = 'heart';
-  h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  h.style.left = Math.random() * 100 + 'vw';
-  h.style.animationDuration = (Math.random() * 4 + 3) + 's';
-  h.style.fontSize = (Math.random() * 14 + 12) + 'px';
-  document.body.appendChild(h);
-  setTimeout(() => h.remove(), 7000);
-}, 600);
-
-/* ─── SCREEN HELPERS ─── */
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
-
-function goBack(from, to) {
-  showScreen(to);
-}
-
-/* ─── PASSWORD ─── */
-function checkPassword() {
-  const v = document.getElementById('password').value.toLowerCase().trim();
-  if (v === 'i love you mera aadmi 1') {
-    document.getElementById('music').play().catch(() => {});
-    showScreen('intro');
-  } else {
-    const err = document.getElementById('error');
-    err.textContent = 'Wrong code 😢 Try again!';
-    document.getElementById('password').style.borderColor = '#ff4466';
-    setTimeout(() => {
-      err.textContent = '';
-      document.getElementById('password').style.borderColor = '';
-    }, 2000);
-  }
-}
-
-/* ─── CHAT FROM LOCK ─── */
-function openChatFromLock() {
-  chatFromLock = true;
-  showScreen('userSelectScreen');
-}
-
-function selectUser(user) {
-  currentUser = user;
-  if (chatFromLock) {
-    openChat();
-  }
-}
-
-/* ─── INTRO → MAIN ─── */
-function startMain() {
-  mainActive = true;
-  showScreen('main');
-  document.getElementById('chatFab').style.display = 'flex';
-  typeWriter();
-}
-
-/* ─── CHAT FROM MAIN ─── */
-function openChatMain() {
-  if (!currentUser) {
-    // Ask who they are first
-    chatFromLock = false;
-    // Inline: simple prompt using user select screen
-    document.getElementById('chatBack').onclick = () => { showScreen('main'); };
-    showScreen('userSelectScreen');
-    // Override selectUser temporarily
-    const orig = window.selectUser;
-    window.selectUser = function(u) {
-      currentUser = u;
-      window.selectUser = orig;
-      openChat();
-    };
-  } else {
-    openChat();
-  }
-}
-
-function openChat() {
-  // set chat header
-  const avatar = document.getElementById('chatAvatar');
-  const title = document.getElementById('chatTitle');
-  if (currentUser === 'nikita') {
-    avatar.textContent = '👩';
-    title.textContent = 'Mukesh ke liye ❤️';
-  } else {
-    avatar.textContent = '👨';
-    title.textContent = 'Nikita ke liye ❤️';
-  }
-  document.getElementById('chatBack').onclick = closeChat;
-  renderMessages();
-  showScreen('chatScreen');
-}
-
-function closeChat() {
-  if (mainActive) {
-    showScreen('main');
-    document.getElementById('chatFab').style.display = 'flex';
-  } else {
-    showScreen('lockScreen');
-  }
-}
-
-/* ─── MESSAGES ─── */
-function renderMessages() {
-  const box = document.getElementById('chatMessages');
-  box.innerHTML = '<div class="date-label">Today 💕</div>';
-
-  messages.forEach(m => {
-    const div = document.createElement('div');
-    // If currentUser is nikita: nikita's msgs = sent, mukesh's = received
-    // If currentUser is mukesh: mukesh's msgs = sent, nikita's = received
-    const isMine = m.from === currentUser;
-    div.className = 'msg ' + (isMine ? 'sent' : 'received');
-
-    const label = document.createElement('div');
-    label.className = 'msg-label';
-    label.textContent = m.from === 'nikita' ? '👩 Nikita' : '👨 Mukesh';
-    div.appendChild(label);
-
-    const text = document.createElement('span');
-    text.textContent = m.text;
-    div.appendChild(text);
-
-    box.appendChild(div);
-  });
-
-  setTimeout(() => { box.scrollTop = box.scrollHeight; }, 50);
-}
-
-function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text || !currentUser) return;
-
-  const msg = { from: currentUser, text, time: Date.now() };
-  messages.push(msg);
-  localStorage.setItem('nk_msgs', JSON.stringify(messages));
-  input.value = '';
-  renderMessages();
-}
-
-/* ─── TYPEWRITER ─── */
-const letter = `Aaj ka din mere liye bahut hi khaas hai, kyunki aaj woh din hai jab meri zindagi ki sabse khoobsurat aur sabse important insaan is duniya me aayi thi. Main dil se shukr guzar hoon ki tum meri life ka hissa ho. Jab se tum meri zindagi me aayi ho, tab se meri duniya hi badal gayi hai. Pehle zindagi bas chal rahi thi, lekin tumhare aane ke baad zindagi jeene ka asli matlab samajh aaya.
-
-Tumhari muskaan meri sabse badi khushi hai. Tumhari awaaz mere liye sukoon hai. Jab bhi main thak jata hoon ya pareshan hota hoon, bas tumhare baare me soch kar hi sab
+/* ───
