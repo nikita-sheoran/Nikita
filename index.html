@@ -542,16 +542,16 @@ body::after {
   50%{ background-position: 100% 50%; }
   100%{ background-position: 0% 50%; }
 }
-  .rotating-heart {
+.rotating-heart {
   display: inline-block;
-  animation: rotateHeart 2s linear infinite;
+  position: relative;
+  animation: moveHeart 2s ease-in-out infinite alternate;
   filter: drop-shadow(0 0 8px rgba(255, 0, 100, 0.6));
 }
 
-@keyframes rotateHeart {
-  0%   { transform: rotate(0deg) scale(1); }
-  50%  { transform: rotate(180deg) scale(1.2); }
-  100% { transform: rotate(360deg) scale(1); }
+@keyframes moveHeart {
+  0%   { transform: translateX(-5px); }
+  100% { transform: translateX(10px); }
 }
 </style>
 </head>
