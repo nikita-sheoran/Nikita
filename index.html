@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Nikita ❤️</title>
+<title>For Nikita <span class="rotating-heart">❤️</span></title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -542,6 +542,17 @@ body::after {
   50%{ background-position: 100% 50%; }
   100%{ background-position: 0% 50%; }
 }
+  .rotating-heart {
+  display: inline-block;
+  animation: rotateHeart 2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 100, 0.6));
+}
+
+@keyframes rotateHeart {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
 </style>
 </head>
 <body>
@@ -557,7 +568,7 @@ body::after {
              onkeydown="if(event.key==='Enter') checkPassword()">
       <button class="eye-btn" id="eyeBtn" onclick="togglePw()" type="button">👁️</button>
     </div>
-    <button class="unlock-btn" onclick="checkPassword()">Unlock ❤️</button>
+    <button class="unlock-btn" onclick="checkPassword()">Unlock <span class="rotating-heart">❤️</span></button>
     <p id="error"></p>
   </div>
 </div>
@@ -569,8 +580,8 @@ body::after {
       <img src="file_00000000d1dc720886a68383aa6016ef.png" class="photo"
            onerror="this.style.display='none'">
     </div>
-    <h2>A Special Surprise For You 💖</h2>
-    <button class="start-btn" onclick="startMain()">Open Letter ❤️</button>
+    <h2>A Special Surprise For You <span class="rotating-heart">❤️</span></h2>
+    <button class="start-btn" onclick="startMain()">Open Letter <span class="rotating-heart">❤️</span></button>
   </div>
 </div>
 
@@ -581,7 +592,7 @@ body::after {
     <!-- HEADER -->
     <div class="hero-header">
       <h1 class="main-title">Meri Pyaari Nikita,</h1>
-      <p class="main-subtitle">— Happy Birthday meri jaan 🎂❤️ —</p>
+      <p class="main-subtitle">— Happy Birthday meri jaan 🎂<span class="rotating-heart">❤️</span> —</p>
       <div class="header-ornament"><div class="ornament-diamond"></div></div>
     </div>
 
@@ -731,12 +742,12 @@ Tum… sirf tum.
 
       <span class="wada-head">Main wada karta hoon...</span>
       <div class="wada-list">
-        <div class="wada-item"><span class="wada-icon">❤️</span> Tumhari izzat hamesha karunga — har pal, har jagah, har haal mein.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Zindagi mein chahe kitni bhi mushkilein aaye — tumhara haath kabhi nahi chhodunga.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Jab bhi koi khushi aaye, sabse pehle tumhare saath share karunga.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Har mushkil mein tumhara saaya banunga, teri dhoop mein chaon banunga.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Tumhe kabhi akela nahi hone dunga — chahe duniya saath chhod de.</div>
-        <div class="wada-item"><span class="wada-icon">❤️</span> Woh train ke safar ki tarah — hamesha tumhare paas baitha rahunga. Har safar mein.</div>
+        <div class="wada-item"><span class="wada-icon"><span class="rotating-heart">❤️</span></span> Tumhari izzat hamesha karunga — har pal, har jagah, har haal mein.</div>
+        <div class="wada-item"><span class="wada-icon"><span class="rotating-heart">❤️</span></span> Zindagi mein chahe kitni bhi mushkilein aaye — tumhara haath kabhi nahi chhodunga.</div>
+        <div class="wada-item"><span class="wada-icon"><span class="rotating-heart">❤️</span></span> Jab bhi koi khushi aaye, sabse pehle tumhare saath share karunga.</div>
+        <div class="wada-item"><span class="wada-icon"><span class="rotating-heart">❤️</span></span> Har mushkil mein tumhara saaya banunga, teri dhoop mein chaon banunga.</div>
+        <div class="wada-item"><span class="wada-icon"><span class="rotating-heart">❤️</span></span> Tumhe kabhi akela nahi hone dunga — chahe duniya saath chhod de.</div>
+        <div class="wada-item"><span class="wada-icon"><span class="rotating-heart">❤️</span></span> Woh train ke safar ki tarah — hamesha tumhare paas baitha rahunga. Har safar mein.</div>
       </div>
 
       <p class="love-line">
@@ -745,7 +756,7 @@ Tum… sirf tum.
         aur ek umeed ki tum "haan" kaho.
       </p>
       <p class="love-line">Jitni tum meri zindagi mein special ho — utna hi special yeh din tumhare liye ho. Hamesha.</p>
-      <p class="love-line">Happy Birthday once again, meri jaan. ❤️</p>
+      <p class="love-line">Happy Birthday once again, meri jaan. <span class="rotating-heart">❤️</span></p>
       <p class="love-line">
         I love you more than words can ever explain.<br>
         Hamesha. Sirf tum. Sirf tumhara.
