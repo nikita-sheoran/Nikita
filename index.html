@@ -773,6 +773,11 @@ Tum… sirf tum.
   <source src="Trim_AUD-20260318-WA0000_1.m4a">
 </audio>
 
+<!-- 👇 YAHAN DALNA H VIDEO -->
+<video id="introVideo" style="display:none; position:fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:999;">
+  <source src="your_video.mp4" type="video/mp4">
+</video>
+
 <script>
 /* ── CANVAS PARTICLES ── */
 const canvas = document.getElementById('canvas');
@@ -829,14 +834,37 @@ function togglePw(){
 }
 function checkPassword(){
   const v=document.getElementById('password').value.toLowerCase().trim();
+  
   if(v==='i love you mera aadmi'){
-    document.getElementById('music').play().catch(()=>{});
-    showScreen('intro');
+    
+    // lock screen hide
+    document.getElementById('lockScreen').classList.add('hidden');
+    
+    // video show
+    const video = document.getElementById('introVideo');
+    video.style.display = 'block';
+    
+    video.play().catch(()=>{});
+    
+    // video end hone par next screen
+    video.onended = () => {
+      video.style.display = 'none';
+      
+      // music start
+      document.getElementById('music').play().catch(()=>{});
+      
+      // intro open
+      showScreen('intro');
+    };
+    
   } else {
     const err=document.getElementById('error');
     err.textContent='Wrong code 😢 Try again!';
     document.getElementById('password').style.borderColor='rgba(212,84,122,0.8)';
-    setTimeout(()=>{ err.textContent=''; document.getElementById('password').style.borderColor=''; },2200);
+    setTimeout(()=>{
+      err.textContent='';
+      document.getElementById('password').style.borderColor='';
+    },2200);
   }
 }
 
